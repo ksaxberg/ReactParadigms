@@ -1,0 +1,412 @@
+#+TITLE: React Concepts in Practice
+#+AUTHOR: Kyle
+#+EMAIL: kyle@codesignal.com
+#+LANGUAGE: en
+#+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc H:4 num:nil
+#+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:https://orgmode.org/org-info.js
+#+SETUPFILE: theme-readtheorg.setup
+
+#+BEGIN_COMMENT
+Trying to find ways to add styling here. it's a bit tricky
+Potential leads: [[https://github.com/fniessen/org-html-themes#readtheorg][readtheorg]]
+also have older bootstrap2 base site, [[http://renard.github.io/o-blog/index.html][oblog]]
+
+reference card for org mode [[https://github.com/fniessen/refcard-org-mode][refcard]]
+
+[[https://codersblock.com/blog/customizing-github-gists/][styling github gists]]
+[[https://lonekorean.github.io/gist-syntax-themes/][direct link to gist-syntax-themes]]
+
+Html elements can be embedded inside of a #+BEGIN_EXPORT html and #+END_EXPORT block
+
+specific ids for css targetting can be applied to sections with the following blocks:
+
+//- Some Section Header
+//- :PROPERTIES:
+//- :CUSTOM_ID: customIdForCss
+//- :END:
+
+#+END_COMMENT
+
+* React Components
+** Paradigms 
+*** Introduction and Overview
+ Here's a good video overview of 4 major kinds of React components.
+ #+BEGIN_EXPORT html
+ <div class="container-fluid">
+   <div class="row">
+     <div class="col-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+       <div class="embed-responsive embed-responsive-16by9">
+         <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/YaZg8wg39QQ?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+       </div>
+     </div>
+   </div>
+ </div>
+ #+END_EXPORT
+
+*** Functional Component (Pure Component)
+**** No state, no side effects.
+
+
+#+NAME: Functional Component Example
+#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
+import React from 'react';
+const Box = ({color}) => (
+  <div
+    style={{
+      backgroundColor: color || 'green',
+      height: '10px',
+      width: '10px'
+    }}
+  />
+);
+#+END_SRC
+
+#+NAME: PureComponent Example
+#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
+import * as React from 'react';
+
+class Box extends React.PureComponent {
+  render() {
+    return (
+      <div
+        style={{
+          backgroundColor: color || 'green',
+          height: '10px',
+          width: '10px'
+        }}
+      />
+    );
+  }
+}
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/5653ba87024fd37b3a0d8785b10b7194.js"></script>
+#+END_EXPORT
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/ef1d0598b609a3f60a690eb3b5061402.js"></script>
+#+END_EXPORT
+
+**** What is ~PureComponent~?
+A React Component's ~shouldComponentUpdate~ method is defaulted to just ~return true~. PureComponent has this defaulted
+to a shallow comparison of props and state, which can help prevent unnecessary rendering of react components.
+
+**** Still some discussion about usage
+     
+[[https://hackernoon.com/react-stateless-functional-components-nine-wins-you-might-have-overlooked-997b0d933][Benefits]] and [[https://medium.freecodecamp.org/7-reasons-to-outlaw-reacts-functional-components-ff5b5ae09b7c][Drawbacks]]
+Quick summary about Functional Components:
+- Easy to test
+- Easy to read
+- Provide no efficiency under the hood, so React still creates the class that you didn't
+- Git diff conversions to PureComponent (the efficient version) look noisy as you have to add class boilerplate
+
+**** Additional Resources
+
+- [[https://reactjs.org/docs/react-api.html#reactpurecomponent][Pure Component]] in the React Documentation
+- [[https://www.youtube.com/watch?v=40Bq8kOKB74][A quick comparison of shouldComponentUpdate and PureComponent]]
+- [[https://www.youtube.com/watch?v=Lx0AE-mhNlg][Quick tutorial about functional components]]
+
+**** A note on Presentational Components (Spoiler alert: It's just a View)
+Dan Abramov considers Presentational and Container components as [[https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0][two different kinds of components]].
+The distinction is usually drawn along the lines of [[https://medium.com/@yassimortensen/container-vs-presentational-components-in-react-8eea956e1cea][presentational components organizing the view]], while the container component may load / organize data.
+
+*** Controller Component
+
+**** Can have state, bind functions, organize layouts
+
+ #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
+ import * as React from 'react';
+
+ class ColorBox extends React.Component {
+   componentDidMount() {
+     this.getColors();
+   }
+
+   getColors = async () => {
+     const colors = await axios.get('https://color.api/random');
+     this.setState({colors});
+   }
+
+   render() {
+     return (
+       <div>
+         {this.state.colors.forEach(color => (<Box key={color} color={color} />))}
+         <button type="button" onClick={this.getColors}>New Colors</button>
+       </div>
+     );
+   }
+ }
+
+ #+END_SRC
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/f8f73aaafa003c6991355e8a5eb59ee2.js"></script>
+#+END_EXPORT
+
+
+**** TODO ~React.Component~ is your workhorse.
+
+**** TODO Pros/Cons? It's literally the whole app 
+
+*** Higher Order Component
+
+**** Can have state, provides additional functionality to the component(s) that are wrapped
+
+#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
+// connect: The HoC we know and love
+import { connect } from 'react-redux';
+
+const AwareComponent = connect(getCurrentUser)(Component);
+
+// Making a new Higher Order Component that binds some props
+
+// This function takes a component...
+function propBinder(WrappedComponent, propsToBind) {
+  // ...and returns another component...
+  return class extends React.Component {
+    render() {
+      // Notice that we pass through any additional props
+      return <WrappedComponent {...this.props} {...propsToBind} />;
+    }
+  };
+}
+
+const AlertButton = propBinder(Button, {
+  type: 'alert',
+  size: '24',
+  case: 'none',
+  fontSize: '14',
+  className: '-margin-h-8'
+});
+
+
+// A version the React Team would approve of
+const propBinder2 = propsToBind => WrappedComponent =>
+  (props) => <WrappedComponent {...props} {...propsToBind} />;
+
+const AlertButton2 = propBinder2({
+  type: 'alert',
+  size: '24',
+  case: 'none',
+  fontSize: '14',
+  className: '-margin-h-8'
+})(Button);
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/9094c3004bf5d619ca0f1d75440d5e9c.js"></script>
+#+END_EXPORT
+
+
+**** Structure: ~const HoC => config => BaseComponent => EnhancedComponent~
+
+**** TODO More description, Pros/Cons section
+
+**** The React team has certain suggestions about how to implement HoCs 
+- Don't [[https://reactjs.org/docs/higher-order-components.html#dont-mutate-the-original-component-use-composition][modify the functions of the wrapped component]]
+- HoCs should support [[https://reactjs.org/docs/higher-order-components.html#convention-pass-unrelated-props-through-to-the-wrapped-component][passthrough of unrelated props]]
+- Use the [[https://reactjs.org/docs/higher-order-components.html#convention-maximizing-composability][HoC thunk pattern to support composition]] , which just means you have the parenthesis ~connect(config)(Component)~ instead of ~connect(config, Component)~
+  - This allows for clear distinction of the component and argmuments when applying multiple HoCs
+
+**** Additional Resources
+- [[https://reactjs.org/docs/higher-order-components.html][Higher Order Components]] in the React Documentation
+- A tutorial on HoCs [[https://levelup.gitconnected.com/understanding-react-higher-order-components-by-example-95e8c47c8006][by example]]
+- The self-purported [[https://medium.freecodecamp.org/higher-order-components-the-ultimate-guide-b453a68bb851][Ultimate Guide to HoCs]]
+
+
+*** Render Props
+**** Share functionality between components
+
+#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
+import * as React from 'react';
+
+type RenderPropArgs = {
+  on: boolean,
+  toggle: () => *
+};
+
+type Props = { children: React.ComponentType<RenderPropArgs> };
+type State = { on: boolean };
+
+class Toggle extends React.Component<Props, State> {
+  state = {
+    on: false
+  };
+
+  toggle = () => this.setState(({on}) => ({on: !on}));
+
+  render() {
+    return this.props.children({
+      on: this.state.on,
+      toggle: this.toggle
+    });
+  }
+}
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/e7ebfcdae62e2b796a56909578072236.js"></script>
+#+END_EXPORT
+
+**** What exactly do Render Props do for you?
+- Share *functionality* between components
+  - The component parts that were _boilerplate_ before can now be re-used!
+  - Ever had a component that loads data on mounting, reloads on specific props changes?
+  - Maybe it also has a loading state?
+  - Stay tuned for a helpful Render Prop example!
+- Represent a way of utilizing [[https://medium.com/byteconf/render-props-in-react-6081b6fa3593][depencency injection]] in combining components
+  - A ~List~ container could know nothing about how each ~ListItem~ is displayed
+  - You can skip the component creation in HoCs, as Render Props are defined at their usage.
+- But make sure you know [[https://blog.kentcdodds.com/when-to-not-use-render-props-5397bbeff746][why you are using a Render Prop]]
+
+**** Some things to note
+
+React does not support passing a function as ~children~. This is awesome! It means that we can co-opt that usage of children for Render Props.
+Instead of defining a prop ~render~ or ~component~ being how the function is passed, you can instead pass the function in as the ~children~ prop.
+This keeps code that uses Render Props clean and expressive, as you'll see later on.
+
+Unrelated, [[https://medium.com/@pshrmn/dont-call-it-a-render-prop-810b80b9c5c5][some people]] are mad about the name Render Prop, but 'function as a child' is not a great alternative name. 
+
+**** Additional Resources
+- [[https://hackernoon.com/do-more-with-less-using-render-props-de5bcdfbe74c][Introduction to Render Props]] and why they are useful
+  - A quick gist from that article, which illuminates the power of RenderProps
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/JoaoCnh/1d72971519a9330643a8d021623f4465.js"></script>
+#+END_EXPORT 
+- [[https://reactjs.org/docs/render-props.html][Render Props]] in the React documentation
+
+** How Can We Leverage These?
+
+*** Simple Example: Using an Accordion
+Sometimes you have a controlled component that you'd rather were uncontrolled, and a handy Render Prop could give the functionality you need in-line.
+
+#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
+import * as React from 'react';
+
+import Accordion from './Accordion';
+import Toggle from './Toggle';
+
+const Description = ({onSubmit}) => (
+  <div className="-space-v-8">
+    <div className="-blue-grey-40">Add your details below</div>
+    <Toggle>
+      {({on, toggle}) => (
+        <Accordion >
+          <form onSubmit={onSubmit}>
+            <input name="details" type="text" />
+            <button type="submit">Submit</button>
+          </form>
+        </Accordion>
+      )}
+    </Toggle>
+  </div>
+);
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/283b1cf53d9daa444486019e6535c94e.js"></script>
+#+END_EXPORT
+
+*** Data Loading
+**** A Render-Props version of loading data
+Re-use the loading method, setting the loading state, and error handling. The example assumes the function ~hasArrayChanged~ exists.
+This could either be a check for the array reference, shallow check of array contents, or even more. If this varies depending on usage, this Loader could be modified to take in the function as a prop.
+
+#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
+import * as React from 'react';
+import { hasArrayChanged } from 'array-utils';
+
+type RenderPropArgs<T> = {loading: boolean, data: T, errors: *};
+
+type Props<G, T> = {args: G, load: (...args: G) => Promise<T>, children: React.ComponentType<RenderPropArgs<T>>};
+
+type State<T> = {
+  data: T,
+  loading: boolean,
+  errors: *,
+};
+
+class Loader extends React.Component<Props, State> {
+  state = { data: null, errors: null, loading: false };
+
+  componentDidMount() {
+    this.loadData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (hasArrayChanged(this.props.args, prevProps.args)) {
+      this.loadData();
+    }
+  }
+
+  loadData = async () => {
+    this.setState({loading: true});
+    try {
+      const data = await this.props.load(...this.props.args);
+      const this.setState({ data, loading: false, errors: null});
+    } catch (err: *) {
+      this.setState({data: null, loading: false, errors: err});
+    } 
+  };
+
+  render() {
+    return this.props.children({...this.state});
+  }
+}
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/39edd9b88e76ec9d138bc170c5eefeae.js"></script>
+#+END_EXPORT
+
+**** Which could be used like:
+#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
+function HandyHeader = ({userId}) => (
+  <Loader args={[userId]} load={methodService.run.bind(null, 'userService.grabSomething')}>
+    {({data, errors, loading}) => {
+      if (loading) {
+        return <Loading />;
+      }
+      if (errors) {
+        return <div>Whoops: {errors}</div>;
+      }
+      return (
+        <div>
+          <Label>Here's that user specific data you asked for</Label>
+          <DataVisualizer data={data} />
+        </div>
+      );
+    }}
+  </Loader>
+);
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/38454d47dc01f0ce0a21d107a07884b4.js"></script>
+#+END_EXPORT
+
+*** Package to help get ideas
+These are packed with tons of re-usable functionality!
+**** [[https://github.com/renatorib/react-powerplug][React-Powerplug]]
+It's only 3kb minified
+**** [[https://github.com/jaredpalmer/awesome-react-render-props][List of Render Props Packages]]
+** TODO Cases in our Code
+
+* React Tips and Tricks
+** Binding callbacks
+There are a few articles about [[https://medium.freecodecamp.org/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56][how to address this.]] The quick answer is to avoid in-line lambdas for performance reason, and to use class properties.
+
+#+BEGIN_SRC js
+class Component extends React.Component {
+  message = 'Harumph';
+
+  onClick = () => console.log('Hear my message: ', this.message);
+
+  render() {
+    return (
+      <button type="button" onClick={this.onClick}>Click me!</button>
+    );
+  }
+}
+#+END_SRC

@@ -1,0 +1,71 @@
+@import url('https://cdn.rawgit.com/lonekorean/gist-syntax-themes/b737b139/stylesheets/tomorrow-night.css');
+
+body {
+    background-color: #E5EBF2;
+    color: #333333;
+    font-variant-ligatures: normal;
+    font-size: 14px;
+}
+
+#content {
+    max-width: none;
+}
+
+h1, h5, h6 {
+    color: #33485F;
+}
+
+h2, h3, h4 {
+    color: #44BFA3;
+}
+h2 {
+    font-size: 32px;
+    padding-bottom: 10px;
+}
+
+h3 {
+    font-size: 28px;
+    padding-bottom: 10px;
+}
+
+h4 {
+    font-size: 24px;
+    padding-bottom: 5px;
+}
+
+h5 {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    font-size: 18px;
+}
+
+body .gist {
+    box-shadow: 7px 7px 20px grey;
+    margin-bottom: 20px;
+}
+
+body .gist .blob-num {
+    pointer-events: none;
+    border: none;
+}
+
+body .gist .gist-meta {
+    display: none;
+}
+
+
+body .gist .gist-file .gist-data .blob-code-inner {
+    font-family: 'Fira Code';
+    font-size: 14px;
+}
+
+body .gist .gist-data {
+    border: none;
+    background-color: transparent;
+}
+
+body .gist .gist-file {
+    margin-bottom: 0;
+    border: none;
+    border-radius: 0;
+}
