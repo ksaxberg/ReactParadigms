@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-08-18 Sat 21:25 -->
+<!-- 2018-08-18 Sat 21:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>React Concepts in Practice</title>
@@ -243,86 +243,86 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org72f233d">React Components</a>
+<li><a href="#orgbca8c99">React Components</a>
 <ul>
-<li><a href="#org5e23c08">Paradigms</a>
+<li><a href="#org56f42c1">Paradigms</a>
 <ul>
-<li><a href="#orgecce7a9">Introduction and Overview</a></li>
-<li><a href="#org6b65a30">Functional Component (Pure Component)</a>
+<li><a href="#org91ab84e">Introduction and Overview</a></li>
+<li><a href="#orga2b088f">Functional Component (Pure Component)</a>
 <ul>
-<li><a href="#org5244f2d">No state, no side effects.</a></li>
-<li><a href="#orgb4cef38">What is <code>PureComponent</code>?</a></li>
-<li><a href="#org734c2a8">Still some discussion about usage</a></li>
-<li><a href="#org2783d44">Additional Resources</a></li>
-<li><a href="#org4c88f58">A note on Presentational Components (Spoiler alert: It's just a View)</a></li>
+<li><a href="#org3dfb29e">No state, no side effects.</a></li>
+<li><a href="#org171631d">What is <code>PureComponent</code>?</a></li>
+<li><a href="#org3eddaa8">Still some discussion about usage</a></li>
+<li><a href="#org5e0ed2a">Additional Resources</a></li>
+<li><a href="#orgd267095">A note on Presentational Components (Spoiler alert: It's just a View)</a></li>
 </ul>
 </li>
-<li><a href="#org8f55a21">Controller Component</a>
+<li><a href="#org236c5cf">Controller Component</a>
 <ul>
-<li><a href="#org83a0c85">Can have state, bind functions, organize layouts</a></li>
-<li><a href="#org16499e1"><span class="todo TODO">TODO</span> <code>React.Component</code> is your workhorse.</a></li>
-<li><a href="#org922ab90"><span class="todo TODO">TODO</span> Pros/Cons? It's literally the whole app</a></li>
+<li><a href="#org723425f">Can have state, bind functions, organize layouts</a></li>
+<li><a href="#orgb0914ef"><span class="todo TODO">TODO</span> <code>React.Component</code> is your workhorse.</a></li>
+<li><a href="#orgd7081ca"><span class="todo TODO">TODO</span> Pros/Cons? It's literally the whole app</a></li>
 </ul>
 </li>
-<li><a href="#orgcc061bc">Higher Order Component</a>
+<li><a href="#org13acbb2">Higher Order Component</a>
 <ul>
-<li><a href="#org3b16c77">Can have state, provides additional functionality to the component(s) that are wrapped</a></li>
-<li><a href="#org39a70ec">Structure: <code>const HoC =&gt; config =&gt; BaseComponent =&gt; EnhancedComponent</code></a></li>
-<li><a href="#org7f2a215"><span class="todo TODO">TODO</span> More description, Pros/Cons section</a></li>
-<li><a href="#orgf64afdb">The React team has certain suggestions about how to implement HoCs</a></li>
-<li><a href="#org40752da">Additional Resources</a></li>
+<li><a href="#org47061fb">Can have state, provides additional functionality to the component(s) that are wrapped</a></li>
+<li><a href="#orgee32d0e">Structure: <code>const HoC =&gt; config =&gt; BaseComponent =&gt; EnhancedComponent</code></a></li>
+<li><a href="#orgb937573"><span class="todo TODO">TODO</span> More description, Pros/Cons section</a></li>
+<li><a href="#org79a34a4">The React team has certain suggestions about how to implement HoCs</a></li>
+<li><a href="#org2b12ba0">Additional Resources</a></li>
 </ul>
 </li>
-<li><a href="#org57be105">Render Props</a>
+<li><a href="#orgbf98396">Render Props</a>
 <ul>
-<li><a href="#org3c4fcf3">Share functionality between components</a></li>
-<li><a href="#org9a2904c">What exactly do Render Props do for you?</a></li>
-<li><a href="#orgfaff4c2">Some things to note</a></li>
-<li><a href="#orgc8d69b5">Additional Resources</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#org2a39f8d">How Can We Leverage These?</a>
-<ul>
-<li><a href="#orgb8814b8">Simple Example: Using an Accordion</a></li>
-<li><a href="#org7d38b97">Data Loading</a>
-<ul>
-<li><a href="#org5bacb6c">A Render-Props version of loading data</a></li>
-<li><a href="#orgb0a2471">Which could be used like:</a></li>
-</ul>
-</li>
-<li><a href="#org3917d6a">Package to help get ideas</a>
-<ul>
-<li><a href="#org28eb040">React-Powerplug</a></li>
-<li><a href="#orgac49b35">List of Render Props Packages</a></li>
+<li><a href="#org32826ef">Share functionality between components</a></li>
+<li><a href="#orgf6d741d">What exactly do Render Props do for you?</a></li>
+<li><a href="#org8d45fa6">Some things to note</a></li>
+<li><a href="#org5f80d7a">Additional Resources</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org29022b3"><span class="todo TODO">TODO</span> Cases in our Code</a></li>
+<li><a href="#orgb95b9d1">How Can We Leverage These?</a>
+<ul>
+<li><a href="#org23ff521">Simple Example: Using an Accordion</a></li>
+<li><a href="#org01b5648">Data Loading</a>
+<ul>
+<li><a href="#orgdb989f2">A Render-Props version of loading data</a></li>
+<li><a href="#orgc2d5ab9">Which could be used like:</a></li>
 </ul>
 </li>
-<li><a href="#orgb05ea63">React Tips and Tricks</a>
+<li><a href="#org43f2933">Package to help get ideas</a>
 <ul>
-<li><a href="#org01bbba4">Binding callbacks</a></li>
+<li><a href="#org0f7c2a7">React-Powerplug</a></li>
+<li><a href="#org5773671">List of Render Props Packages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org0a11e26"><span class="todo TODO">TODO</span> Cases in our Code</a></li>
+</ul>
+</li>
+<li><a href="#orgda7a012">React Tips and Tricks</a>
+<ul>
+<li><a href="#org7f2590f">Binding callbacks</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org72f233d" class="outline-2">
-<h2 id="org72f233d">React Components</h2>
-<div class="outline-text-2" id="text-org72f233d">
+<div id="outline-container-orgbca8c99" class="outline-2">
+<h2 id="orgbca8c99">React Components</h2>
+<div class="outline-text-2" id="text-orgbca8c99">
 </div>
-<div id="outline-container-org5e23c08" class="outline-3">
-<h3 id="org5e23c08">Paradigms</h3>
-<div class="outline-text-3" id="text-org5e23c08">
+<div id="outline-container-org56f42c1" class="outline-3">
+<h3 id="org56f42c1">Paradigms</h3>
+<div class="outline-text-3" id="text-org56f42c1">
 </div>
-<div id="outline-container-orgecce7a9" class="outline-4">
-<h4 id="orgecce7a9">Introduction and Overview</h4>
-<div class="outline-text-4" id="text-orgecce7a9">
+<div id="outline-container-org91ab84e" class="outline-4">
+<h4 id="org91ab84e">Introduction and Overview</h4>
+<div class="outline-text-4" id="text-org91ab84e">
 <p>
 Here's a good video overview of 4 major kinds of React components.
 </p>
@@ -338,22 +338,22 @@ Here's a good video overview of 4 major kinds of React components.
 </div>
 </div>
 
-<div id="outline-container-org6b65a30" class="outline-4">
-<h4 id="org6b65a30">Functional Component (Pure Component)</h4>
-<div class="outline-text-4" id="text-org6b65a30">
+<div id="outline-container-orga2b088f" class="outline-4">
+<h4 id="orga2b088f">Functional Component (Pure Component)</h4>
+<div class="outline-text-4" id="text-orga2b088f">
 </div>
-<div id="outline-container-org5244f2d" class="outline-5">
-<h5 id="org5244f2d">No state, no side effects.</h5>
-<div class="outline-text-5" id="text-org5244f2d">
+<div id="outline-container-org3dfb29e" class="outline-5">
+<h5 id="org3dfb29e">No state, no side effects.</h5>
+<div class="outline-text-5" id="text-org3dfb29e">
 <script src="https://gist.github.com/ksaxberg/5653ba87024fd37b3a0d8785b10b7194.js"></script>
 
 <script src="https://gist.github.com/ksaxberg/ef1d0598b609a3f60a690eb3b5061402.js"></script>
 </div>
 </div>
 
-<div id="outline-container-orgb4cef38" class="outline-5">
-<h5 id="orgb4cef38">What is <code>PureComponent</code>?</h5>
-<div class="outline-text-5" id="text-orgb4cef38">
+<div id="outline-container-org171631d" class="outline-5">
+<h5 id="org171631d">What is <code>PureComponent</code>?</h5>
+<div class="outline-text-5" id="text-org171631d">
 <p>
 A React Component's <code>shouldComponentUpdate</code> method is defaulted to just <code>return true</code>. PureComponent has this defaulted
 to a shallow comparison of props and state, which can help prevent unnecessary rendering of react components.
@@ -361,9 +361,9 @@ to a shallow comparison of props and state, which can help prevent unnecessary r
 </div>
 </div>
 
-<div id="outline-container-org734c2a8" class="outline-5">
-<h5 id="org734c2a8">Still some discussion about usage</h5>
-<div class="outline-text-5" id="text-org734c2a8">
+<div id="outline-container-org3eddaa8" class="outline-5">
+<h5 id="org3eddaa8">Still some discussion about usage</h5>
+<div class="outline-text-5" id="text-org3eddaa8">
 <p>
 <a href="https://hackernoon.com/react-stateless-functional-components-nine-wins-you-might-have-overlooked-997b0d933">Benefits</a> and <a href="https://medium.freecodecamp.org/7-reasons-to-outlaw-reacts-functional-components-ff5b5ae09b7c">Drawbacks</a>
 Quick summary about Functional Components:
@@ -377,9 +377,9 @@ Quick summary about Functional Components:
 </div>
 </div>
 
-<div id="outline-container-org2783d44" class="outline-5">
-<h5 id="org2783d44">Additional Resources</h5>
-<div class="outline-text-5" id="text-org2783d44">
+<div id="outline-container-org5e0ed2a" class="outline-5">
+<h5 id="org5e0ed2a">Additional Resources</h5>
+<div class="outline-text-5" id="text-org5e0ed2a">
 <ul class="org-ul">
 <li><a href="https://reactjs.org/docs/react-api.html#reactpurecomponent">Pure Component</a> in the React Documentation</li>
 <li><a href="https://www.youtube.com/watch?v=40Bq8kOKB74">A quick comparison of shouldComponentUpdate and PureComponent</a></li>
@@ -388,9 +388,9 @@ Quick summary about Functional Components:
 </div>
 </div>
 
-<div id="outline-container-org4c88f58" class="outline-5">
-<h5 id="org4c88f58">A note on Presentational Components (Spoiler alert: It's just a View)</h5>
-<div class="outline-text-5" id="text-org4c88f58">
+<div id="outline-container-orgd267095" class="outline-5">
+<h5 id="orgd267095">A note on Presentational Components (Spoiler alert: It's just a View)</h5>
+<div class="outline-text-5" id="text-orgd267095">
 <p>
 Dan Abramov considers Presentational and Container components as <a href="https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0">two different kinds of components</a>.
 The distinction is usually drawn along the lines of <a href="https://medium.com/@yassimortensen/container-vs-presentational-components-in-react-8eea956e1cea">presentational components organizing the view</a>, while the container component may load / organize data.
@@ -399,50 +399,50 @@ The distinction is usually drawn along the lines of <a href="https://medium.com/
 </div>
 </div>
 
-<div id="outline-container-org8f55a21" class="outline-4">
-<h4 id="org8f55a21">Controller Component</h4>
-<div class="outline-text-4" id="text-org8f55a21">
+<div id="outline-container-org236c5cf" class="outline-4">
+<h4 id="org236c5cf">Controller Component</h4>
+<div class="outline-text-4" id="text-org236c5cf">
 </div>
-<div id="outline-container-org83a0c85" class="outline-5">
-<h5 id="org83a0c85">Can have state, bind functions, organize layouts</h5>
-<div class="outline-text-5" id="text-org83a0c85">
+<div id="outline-container-org723425f" class="outline-5">
+<h5 id="org723425f">Can have state, bind functions, organize layouts</h5>
+<div class="outline-text-5" id="text-org723425f">
 <script src="https://gist.github.com/ksaxberg/f8f73aaafa003c6991355e8a5eb59ee2.js"></script>
 </div>
 </div>
 
 
-<div id="outline-container-org16499e1" class="outline-5">
-<h5 id="org16499e1"><span class="todo TODO">TODO</span> <code>React.Component</code> is your workhorse.</h5>
+<div id="outline-container-orgb0914ef" class="outline-5">
+<h5 id="orgb0914ef"><span class="todo TODO">TODO</span> <code>React.Component</code> is your workhorse.</h5>
 </div>
 
-<div id="outline-container-org922ab90" class="outline-5">
-<h5 id="org922ab90"><span class="todo TODO">TODO</span> Pros/Cons? It's literally the whole app</h5>
+<div id="outline-container-orgd7081ca" class="outline-5">
+<h5 id="orgd7081ca"><span class="todo TODO">TODO</span> Pros/Cons? It's literally the whole app</h5>
 </div>
 </div>
 
-<div id="outline-container-orgcc061bc" class="outline-4">
-<h4 id="orgcc061bc">Higher Order Component</h4>
-<div class="outline-text-4" id="text-orgcc061bc">
+<div id="outline-container-org13acbb2" class="outline-4">
+<h4 id="org13acbb2">Higher Order Component</h4>
+<div class="outline-text-4" id="text-org13acbb2">
 </div>
-<div id="outline-container-org3b16c77" class="outline-5">
-<h5 id="org3b16c77">Can have state, provides additional functionality to the component(s) that are wrapped</h5>
-<div class="outline-text-5" id="text-org3b16c77">
+<div id="outline-container-org47061fb" class="outline-5">
+<h5 id="org47061fb">Can have state, provides additional functionality to the component(s) that are wrapped</h5>
+<div class="outline-text-5" id="text-org47061fb">
 <script src="https://gist.github.com/ksaxberg/9094c3004bf5d619ca0f1d75440d5e9c.js"></script>
 </div>
 </div>
 
 
-<div id="outline-container-org39a70ec" class="outline-5">
-<h5 id="org39a70ec">Structure: <code>const HoC =&gt; config =&gt; BaseComponent =&gt; EnhancedComponent</code></h5>
+<div id="outline-container-orgee32d0e" class="outline-5">
+<h5 id="orgee32d0e">Structure: <code>const HoC =&gt; config =&gt; BaseComponent =&gt; EnhancedComponent</code></h5>
 </div>
 
-<div id="outline-container-org7f2a215" class="outline-5">
-<h5 id="org7f2a215"><span class="todo TODO">TODO</span> More description, Pros/Cons section</h5>
+<div id="outline-container-orgb937573" class="outline-5">
+<h5 id="orgb937573"><span class="todo TODO">TODO</span> More description, Pros/Cons section</h5>
 </div>
 
-<div id="outline-container-orgf64afdb" class="outline-5">
-<h5 id="orgf64afdb">The React team has certain suggestions about how to implement HoCs</h5>
-<div class="outline-text-5" id="text-orgf64afdb">
+<div id="outline-container-org79a34a4" class="outline-5">
+<h5 id="org79a34a4">The React team has certain suggestions about how to implement HoCs</h5>
+<div class="outline-text-5" id="text-org79a34a4">
 <ul class="org-ul">
 <li>Don't <a href="https://reactjs.org/docs/higher-order-components.html#dont-mutate-the-original-component-use-composition">modify the functions of the wrapped component</a></li>
 <li>HoCs should support <a href="https://reactjs.org/docs/higher-order-components.html#convention-pass-unrelated-props-through-to-the-wrapped-component">passthrough of unrelated props</a></li>
@@ -454,9 +454,9 @@ The distinction is usually drawn along the lines of <a href="https://medium.com/
 </div>
 </div>
 
-<div id="outline-container-org40752da" class="outline-5">
-<h5 id="org40752da">Additional Resources</h5>
-<div class="outline-text-5" id="text-org40752da">
+<div id="outline-container-org2b12ba0" class="outline-5">
+<h5 id="org2b12ba0">Additional Resources</h5>
+<div class="outline-text-5" id="text-org2b12ba0">
 <ul class="org-ul">
 <li><a href="https://reactjs.org/docs/higher-order-components.html">Higher Order Components</a> in the React Documentation</li>
 <li>A tutorial on HoCs <a href="https://levelup.gitconnected.com/understanding-react-higher-order-components-by-example-95e8c47c8006">by example</a></li>
@@ -467,20 +467,20 @@ The distinction is usually drawn along the lines of <a href="https://medium.com/
 </div>
 
 
-<div id="outline-container-org57be105" class="outline-4">
-<h4 id="org57be105">Render Props</h4>
-<div class="outline-text-4" id="text-org57be105">
+<div id="outline-container-orgbf98396" class="outline-4">
+<h4 id="orgbf98396">Render Props</h4>
+<div class="outline-text-4" id="text-orgbf98396">
 </div>
-<div id="outline-container-org3c4fcf3" class="outline-5">
-<h5 id="org3c4fcf3">Share functionality between components</h5>
-<div class="outline-text-5" id="text-org3c4fcf3">
+<div id="outline-container-org32826ef" class="outline-5">
+<h5 id="org32826ef">Share functionality between components</h5>
+<div class="outline-text-5" id="text-org32826ef">
 <script src="https://gist.github.com/ksaxberg/e7ebfcdae62e2b796a56909578072236.js"></script>
 </div>
 </div>
 
-<div id="outline-container-org9a2904c" class="outline-5">
-<h5 id="org9a2904c">What exactly do Render Props do for you?</h5>
-<div class="outline-text-5" id="text-org9a2904c">
+<div id="outline-container-orgf6d741d" class="outline-5">
+<h5 id="orgf6d741d">What exactly do Render Props do for you?</h5>
+<div class="outline-text-5" id="text-orgf6d741d">
 <ul class="org-ul">
 <li>Share <b>functionality</b> between components
 <ul class="org-ul">
@@ -499,9 +499,9 @@ The distinction is usually drawn along the lines of <a href="https://medium.com/
 </div>
 </div>
 
-<div id="outline-container-orgfaff4c2" class="outline-5">
-<h5 id="orgfaff4c2">Some things to note</h5>
-<div class="outline-text-5" id="text-orgfaff4c2">
+<div id="outline-container-org8d45fa6" class="outline-5">
+<h5 id="org8d45fa6">Some things to note</h5>
+<div class="outline-text-5" id="text-org8d45fa6">
 <p>
 React does not support passing a function as <code>children</code>. This is awesome! It means that we can co-opt that usage of children for Render Props.
 Instead of defining a prop <code>render</code> or <code>component</code> being how the function is passed, you can instead pass the function in as the <code>children</code> prop.
@@ -514,9 +514,9 @@ Unrelated, <a href="https://medium.com/@pshrmn/dont-call-it-a-render-prop-810b80
 </div>
 </div>
 
-<div id="outline-container-orgc8d69b5" class="outline-5">
-<h5 id="orgc8d69b5">Additional Resources</h5>
-<div class="outline-text-5" id="text-orgc8d69b5">
+<div id="outline-container-org5f80d7a" class="outline-5">
+<h5 id="org5f80d7a">Additional Resources</h5>
+<div class="outline-text-5" id="text-org5f80d7a">
 <ul class="org-ul">
 <li><a href="https://hackernoon.com/do-more-with-less-using-render-props-de5bcdfbe74c">Introduction to Render Props</a> and why they are useful
 <ul class="org-ul">
@@ -532,13 +532,13 @@ Unrelated, <a href="https://medium.com/@pshrmn/dont-call-it-a-render-prop-810b80
 </div>
 </div>
 
-<div id="outline-container-org2a39f8d" class="outline-3">
-<h3 id="org2a39f8d">How Can We Leverage These?</h3>
-<div class="outline-text-3" id="text-org2a39f8d">
+<div id="outline-container-orgb95b9d1" class="outline-3">
+<h3 id="orgb95b9d1">How Can We Leverage These?</h3>
+<div class="outline-text-3" id="text-orgb95b9d1">
 </div>
-<div id="outline-container-orgb8814b8" class="outline-4">
-<h4 id="orgb8814b8">Simple Example: Using an Accordion</h4>
-<div class="outline-text-4" id="text-orgb8814b8">
+<div id="outline-container-org23ff521" class="outline-4">
+<h4 id="org23ff521">Simple Example: Using an Accordion</h4>
+<div class="outline-text-4" id="text-org23ff521">
 <p>
 Sometimes you have a controlled component that you'd rather were uncontrolled, and a handy Render Prop could give the functionality you need in-line.
 </p>
@@ -547,13 +547,13 @@ Sometimes you have a controlled component that you'd rather were uncontrolled, a
 </div>
 </div>
 
-<div id="outline-container-org7d38b97" class="outline-4">
-<h4 id="org7d38b97">Data Loading</h4>
-<div class="outline-text-4" id="text-org7d38b97">
+<div id="outline-container-org01b5648" class="outline-4">
+<h4 id="org01b5648">Data Loading</h4>
+<div class="outline-text-4" id="text-org01b5648">
 </div>
-<div id="outline-container-org5bacb6c" class="outline-5">
-<h5 id="org5bacb6c">A Render-Props version of loading data</h5>
-<div class="outline-text-5" id="text-org5bacb6c">
+<div id="outline-container-orgdb989f2" class="outline-5">
+<h5 id="orgdb989f2">A Render-Props version of loading data</h5>
+<div class="outline-text-5" id="text-orgdb989f2">
 <p>
 Re-use the loading method, setting the loading state, and error handling. The example assumes the function <code>hasArrayChanged</code> exists.
 This could either be a check for the array reference, shallow check of array contents, or even more. If this varies depending on usage, this Loader could be modified to take in the function as a prop.
@@ -563,71 +563,58 @@ This could either be a check for the array reference, shallow check of array con
 </div>
 </div>
 
-<div id="outline-container-orgb0a2471" class="outline-5">
-<h5 id="orgb0a2471">Which could be used like:</h5>
-<div class="outline-text-5" id="text-orgb0a2471">
+<div id="outline-container-orgc2d5ab9" class="outline-5">
+<h5 id="orgc2d5ab9">Which could be used like:</h5>
+<div class="outline-text-5" id="text-orgc2d5ab9">
 <script src="https://gist.github.com/ksaxberg/38454d47dc01f0ce0a21d107a07884b4.js"></script>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org3917d6a" class="outline-4">
-<h4 id="org3917d6a">Package to help get ideas</h4>
-<div class="outline-text-4" id="text-org3917d6a">
+<div id="outline-container-org43f2933" class="outline-4">
+<h4 id="org43f2933">Package to help get ideas</h4>
+<div class="outline-text-4" id="text-org43f2933">
 <p>
 These are packed with tons of re-usable functionality!
 </p>
 </div>
-<div id="outline-container-org28eb040" class="outline-5">
-<h5 id="org28eb040"><a href="https://github.com/renatorib/react-powerplug">React-Powerplug</a></h5>
-<div class="outline-text-5" id="text-org28eb040">
+<div id="outline-container-org0f7c2a7" class="outline-5">
+<h5 id="org0f7c2a7"><a href="https://github.com/renatorib/react-powerplug">React-Powerplug</a></h5>
+<div class="outline-text-5" id="text-org0f7c2a7">
 <p>
 It's only 3kb minified
 </p>
 </div>
 </div>
-<div id="outline-container-orgac49b35" class="outline-5">
-<h5 id="orgac49b35"><a href="https://github.com/jaredpalmer/awesome-react-render-props">List of Render Props Packages</a></h5>
+<div id="outline-container-org5773671" class="outline-5">
+<h5 id="org5773671"><a href="https://github.com/jaredpalmer/awesome-react-render-props">List of Render Props Packages</a></h5>
 </div>
 </div>
 </div>
-<div id="outline-container-org29022b3" class="outline-3">
-<h3 id="org29022b3"><span class="todo TODO">TODO</span> Cases in our Code</h3>
+<div id="outline-container-org0a11e26" class="outline-3">
+<h3 id="org0a11e26"><span class="todo TODO">TODO</span> Cases in our Code</h3>
 </div>
 </div>
 
-<div id="outline-container-orgb05ea63" class="outline-2">
-<h2 id="orgb05ea63">React Tips and Tricks</h2>
-<div class="outline-text-2" id="text-orgb05ea63">
+<div id="outline-container-orgda7a012" class="outline-2">
+<h2 id="orgda7a012">React Tips and Tricks</h2>
+<div class="outline-text-2" id="text-orgda7a012">
 </div>
-<div id="outline-container-org01bbba4" class="outline-3">
-<h3 id="org01bbba4">Binding callbacks</h3>
-<div class="outline-text-3" id="text-org01bbba4">
+<div id="outline-container-org7f2590f" class="outline-3">
+<h3 id="org7f2590f">Binding callbacks</h3>
+<div class="outline-text-3" id="text-org7f2590f">
 <p>
 There are a few articles about <a href="https://medium.freecodecamp.org/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56">how to address this.</a> The quick answer is to avoid in-line lambdas for performance reason, and to use class properties.
 </p>
 
-<div class="org-src-container">
-<pre class="src src-js"><span style="color: #4f97d7; font-weight: bold;">class</span> Component <span style="color: #4f97d7; font-weight: bold;">extends</span> React.Component <span style="color: #4f97d7;">{</span>
-  message = <span style="color: #2d9574;">'Harumph'</span>;
-
-  onClick = <span style="color: #bc6ec5;">()</span> =&gt; console.log<span style="color: #bc6ec5;">(</span><span style="color: #2d9574;">'Hear my message: '</span>, <span style="color: #a45bad;">this</span>.message<span style="color: #bc6ec5;">)</span>;
-
-  render<span style="color: #bc6ec5;">()</span> <span style="color: #bc6ec5;">{</span>
-    <span style="color: #4f97d7; font-weight: bold;">return</span> <span style="color: #2d9574;">(</span>
-      &lt;button type=<span style="color: #2d9574;">"button"</span> onClick=<span style="color: #67b11d;">{</span><span style="color: #a45bad;">this</span>.onClick<span style="color: #67b11d;">}</span>&gt;Click me!&lt;/button&gt;
-    <span style="color: #2d9574;">)</span>;
-  <span style="color: #bc6ec5;">}</span>
-<span style="color: #4f97d7;">}</span>
-</pre>
-</div>
+<script src="https://gist.github.com/ksaxberg/fdaa9ba95f1983f7ae8fc749162f368c.js"></script>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Kyle</p>
-<p class="date">Created: 2018-08-18 Sat 21:25</p>
+<p class="date">Created: 2018-08-18 Sat 21:36</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

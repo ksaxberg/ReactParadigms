@@ -398,7 +398,7 @@ It's only 3kb minified
 ** Binding callbacks
 There are a few articles about [[https://medium.freecodecamp.org/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56][how to address this.]] The quick answer is to avoid in-line lambdas for performance reason, and to use class properties.
 
-#+BEGIN_SRC js
+#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
 class Component extends React.Component {
   message = 'Harumph';
 
@@ -411,3 +411,8 @@ class Component extends React.Component {
   }
 }
 #+END_SRC
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/fdaa9ba95f1983f7ae8fc749162f368c.js"></script>
+#+END_EXPORT
+
