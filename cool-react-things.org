@@ -5,6 +5,7 @@
 #+OPTIONS:   TeX:t LaTeX:t skip:nil d:nil todo:t pri:nil tags:not-in-toc H:4 num:nil
 #+INFOJS_OPT: view:nil toc:nil ltoc:t mouse:underline buttons:0 path:https://orgmode.org/org-info.js
 #+SETUPFILE: theme-readtheorg.setup
+#+EXPORT_FILE_NAME: index.html
 
 #+BEGIN_COMMENT
 Trying to find ways to add styling here. it's a bit tricky
