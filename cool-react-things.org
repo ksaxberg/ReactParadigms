@@ -31,18 +31,18 @@ specific ids for css targetting can be applied to sections with the following bl
 * React Components
 ** Paradigms 
 *** Introduction and Overview
- Here's a good video overview of 4 major patterns of React components.
- #+BEGIN_EXPORT html
- <div class="container-fluid">
-   <div class="row">
-     <div class="col-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
-       <div class="embed-responsive embed-responsive-16by9">
-         <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/YaZg8wg39QQ?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-       </div>
-     </div>
-   </div>
- </div>
- #+END_EXPORT
+    Let's start with a quick video discussion about the 4 major patterns of React components.
+#+BEGIN_EXPORT html
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+      <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/YaZg8wg39QQ?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+#+END_EXPORT
 
 *** Functional Component (Pure Component)
 **** No state, no side effects, just rendering. Choose your favorite flavor.
@@ -94,14 +94,14 @@ A React Component's ~shouldComponentUpdate~ method is defaulted to ~return true~
 to a shallow comparison of props and state, which is largely what you would want in a component that acts like a function (same input, same output). Using Pure Component can improve performance by preventing unnecessary rendering of react components.
 
 **** Still some discussion about usage
-     
-***** [[https://hackernoon.com/react-stateless-functional-components-nine-wins-you-might-have-overlooked-997b0d933][Benefits]] and [[https://medium.freecodecamp.org/7-reasons-to-outlaw-reacts-functional-components-ff5b5ae09b7c][drawbacks]]
+There are some [[https://hackernoon.com/react-stateless-functional-components-nine-wins-you-might-have-overlooked-997b0d933][benefits]] and [[https://medium.freecodecamp.org/7-reasons-to-outlaw-reacts-functional-components-ff5b5ae09b7c][drawbacks]]
 
 Quick summary about Functional Components:
 - Easy to test
 - Easy to read
 - Provide no efficiency under the hood, React still creates the class that you didn't
 - Conversions to PureComponent (the efficient version) look noisy in Diff viewers as you have to add class boilerplate
+- The React Team has plans to make Functional Components implement PureComponent by default.
 
 **** Additional Resources
 - [[https://reactjs.org/docs/react-api.html#reactpurecomponent][Pure Component]] in the React Documentation
@@ -109,13 +109,44 @@ Quick summary about Functional Components:
 - [[https://www.youtube.com/watch?v=40Bq8kOKB74][A quick comparison of shouldComponentUpdate and PureComponent]]
 
 **** A note on Presentational Components (Spoiler alert: It's just a View)
-Dan Abramov strongly suggests separating Functional (Presentational) Components and Container components. [[https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0][The Word of Dan]]
-The distinction is usually drawn along the lines of [[https://medium.com/@yassimortensen/container-vs-presentational-components-in-react-8eea956e1cea][presentational components organizing the view]], while the container component may load / organize data. So if you use Functional Components like this, you're in good form!
+[[https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0][Dan Abramov]] strongly suggests separating Functional (Presentational) Components and Container components. 
+The distinction is usually drawn along the lines of [[https://medium.com/@yassimortensen/container-vs-presentational-components-in-react-8eea956e1cea][presentational components organizing the view]], 
+while the container component may load or organize data. So if you use Functional Components as views in
+MVC, you're in good form!
+
+Sometimes you have complex structures that would be served well by having a layout view component. This would
+look something like the following:
+
+#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
+const MainDisplay = ({header, sidebar, leftColumn, rightColumn}) => (
+  <div className="app">
+    <div className="header">
+      {header}
+    </div>
+    <div className="sidebar">
+      {sidebar}
+    </div>
+    <div className="main-content">
+      <div className="leftColumn">
+        {leftColumn}
+      </div>
+      <div className="rightColumn">
+        {rightColumn}
+      </div>
+    </div>
+  </div>
+);
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/3e6acbd907fb10349487b96fca278314.js"></script>
+#+END_EXPORT
+
 
 *** Controller Component
-
 **** Can have state, bind functions, organize layouts
-
+**** It loads data. It might send it to view components. Not much else to say
+     
  #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
  import * as React from 'react';
 
@@ -145,12 +176,9 @@ The distinction is usually drawn along the lines of [[https://medium.com/@yassim
 <script src="https://gist.github.com/ksaxberg/f8f73aaafa003c6991355e8a5eb59ee2.js"></script>
 #+END_EXPORT
 
-
-**** It loads data. It might send it to view components. Not much else to say
 *** Higher Order Component
 **** Provides additional functionality to the component(s) that are wrapped
 **** Structure: ~const HoC => config => BaseComponent => EnhancedComponent~
-
 #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
 // connect: The HoC we know and love
 import { connect } from 'react-redux';
@@ -196,8 +224,12 @@ const AlertButton2 = propBinder2({
 <script src="https://gist.github.com/ksaxberg/9094c3004bf5d619ca0f1d75440d5e9c.js"></script>
 #+END_EXPORT
 
-**** TODO More description, Pros/Cons section
-     
+**** Separating logic from containers can help improve your code
+- Containers can worry less about its data loading, management, or connecting to application state management when that functionality is added via an HoC.
+- Enables you to share functionality between components, as the HoCs exist independent of the components they are applied to.
+- Can make using components more difficult, as you need to look at the ~connect~ function to see what props are being passed by Redux and what props are required to be given to the component.
+- Adds some visual complexity, as now your app has logic being added to compoennts by a function call, which doesn't look very "jsx"-y. You need to hunt down bugs tracking both through layers of JSX and layers of HoCs.
+
 **** The React team has certain suggestions about how to implement HoCs 
 - Don't [[https://reactjs.org/docs/higher-order-components.html#dont-mutate-the-original-component-use-composition][modify the functions of the wrapped component]]
 - HoCs should support [[https://reactjs.org/docs/higher-order-components.html#convention-pass-unrelated-props-through-to-the-wrapped-component][passthrough of unrelated props]]
@@ -206,15 +238,25 @@ const AlertButton2 = propBinder2({
 
 **** Additional Resources
 - [[https://reactjs.org/docs/higher-order-components.html][Higher Order Components]] in the React Documentation
+- An [[https://www.robinwieruch.de/gentle-introduction-higher-order-components/][introduction to HoCs]]
 - A tutorial on HoCs [[https://levelup.gitconnected.com/understanding-react-higher-order-components-by-example-95e8c47c8006][by example]]
 - The self-purported [[https://medium.freecodecamp.org/higher-order-components-the-ultimate-guide-b453a68bb851][Ultimate Guide to HoCs]]
-
 
 *** Render Props
 **** Share functionality between components
 
 #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
-import * as React from 'react';
+const Button = () => (
+  <Toggle>
+    {({on, toggle}) => (
+      <button type="button" onClick={toggle}>
+        Turn {on ? 'Off' : 'On'}
+      </button>
+    )}
+  </Toggle>
+);
+
+// Defining a Toggle Render Prop
 
 type RenderPropArgs = {
   on: boolean,
@@ -257,25 +299,73 @@ class Toggle extends React.Component<Props, State> {
 
 **** Some things to note
 
-React does not support passing a function as ~children~. This is awesome! It means that we can co-opt that usage of children for Render Props.
+React does not assign meaning to passing a function as ~children~. This is awesome! It means that we can co-opt that usage of children for Render Props.
 Instead of defining a prop ~render~ or ~component~ being how the function is passed, you can instead pass the function in as the ~children~ prop.
-This keeps code that uses Render Props clean and expressive, as you'll see later on.
+This keeps code that uses Render Props clean and expressive, as you'll see later on. The React Team themselves have
+embraced this paradign in the [[https://reactjs.org/docs/context.html][React Context API]], which uses Render Props to provide an easy interface to avoid 
+passing props through multiple layers of components (commonly known as [[https://itnext.io/compound-components-with-react-v16-3-6679c752bd56][prop drilling]]).
 
-Unrelated, [[https://medium.com/@pshrmn/dont-call-it-a-render-prop-810b80b9c5c5][some people]] are mad about the name Render Prop, but 'function as a child' is not a great alternative name. 
+Render Props and Higher Order Components ultimately achieve the same thing in different ways. Higher Order Components add functionality to the component,
+but can obscure it behind exports, like when we see ~export default connect(getCurrentUser)(Header)~. This can reduce reusability and make testing more 
+difficult. Render Props have drawbacks as well, as they define added functionality in-line, which can cause the jsx portions to look more dense.
+
+Unrelated, [[https://medium.com/@pshrmn/dont-call-it-a-render-prop-810b80b9c5c5][some people]] are mad about the name Render Prop, but 'function as a child' is not a great
+alternative name. There are [[https://americanexpress.io/faccs-are-an-antipattern/][concerns]] about how having ~children~ be a renderable component does not follow good
+naming conventions, as ~return this.props.children()~ does not make a lot of sense from how things are named. If
+you agree, you could consider renaming the children prop. This does create a class as jsx is being used, so only
+do this if you *really* disagree with calling children as a function.
+
+#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
+// ... Pretend we're in a class
+render() {
+  const { children: View } = this.props;
+  return <View {...this.state} />
+}
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/92ebf76634ccbd36cb39b193c526c25c.js"></script>
+#+END_EXPORT
 
 **** Additional Resources
 - [[https://hackernoon.com/do-more-with-less-using-render-props-de5bcdfbe74c][Introduction to Render Props]] and why they are useful
-  - A quick gist from that article, which illuminates the power of RenderProps
-#+BEGIN_EXPORT html
-<script src="https://gist.github.com/JoaoCnh/1d72971519a9330643a8d021623f4465.js"></script>
-#+END_EXPORT 
 - [[https://reactjs.org/docs/render-props.html][Render Props]] in the React documentation
 
 ** How Can We Leverage These?
-*** TODO Get some Render Props from Powerplug
-*** Simple Example: Using an Accordion
+*** Let's check out some useful pre-made Render Props from React-Powerplug
+**** [[https://github.com/renatorib/react-powerplug/blob/master/docs/components/Hover.md][Hover]]
+Lets you easily use the hover state on the component.
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/818e3be527a51dec06e582443618eea0.js"></script>
+#+END_EXPORT
+**** [[https://github.com/renatorib/react-powerplug/blob/master/docs/components/Value.md][Value]]
+Store whatever value you want, no need to define state! Oh yea, this Render Prop takes in an ~onChange~ callback,
+so you can keep track of what's going on.
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/49bf82cba73efc4a4e2a011a8b7c7676.js"></script>
+#+END_EXPORT
+**** [[https://github.com/renatorib/react-powerplug/blob/master/docs/components/List.md][List]]
+Ever wanted an easy way to manipulate a list that's stored in state? Well here's an abstracted way to do that!
+List also takes a ~onChange~ callback, meaning you can keep your code squeeky clean and still manipulate that list.
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/13ff5d09c1da5ebeeba7789bfc5a7566.js"></script>
+#+END_EXPORT
+
+**** [[https://github.com/renatorib/react-powerplug/blob/master/docs/components/State.md][State]]
+For when you want to throw the kitchen sink at your problem. If you wanted state... just write a class. But
+React-Powerplug won't judge you if you use this.
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/734cce3fc9ffa76ab4dfad5871b50847.js"></script>
+#+END_EXPORT
+
+*** Use Case: Using an Accordion
 Sometimes you have a controlled component that you'd rather were uncontrolled, and a handy Render Prop could give the functionality you need in-line.
 
+Defining your own state? Who needs it! We've got Render Props to share the logic, letting us code even faster.
 #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
 import * as React from 'react';
 
@@ -287,7 +377,10 @@ const Description = ({onSubmit}) => (
     <div className="-blue-grey-40">Add your details below</div>
     <Toggle>
       {({on, toggle}) => (
-        <Accordion >
+        <Accordion
+          state={on ? 'selected' : ''}
+          onChange={toggle}  
+        >
           <form onSubmit={onSubmit}>
             <input name="details" type="text" />
             <button type="submit">Submit</button>
@@ -303,10 +396,38 @@ const Description = ({onSubmit}) => (
 <script src="https://gist.github.com/ksaxberg/283b1cf53d9daa444486019e6535c94e.js"></script>
 #+END_EXPORT
 
+
 *** Data Loading
-**** A Render-Props version of loading data
-Re-use the loading method, setting the loading state, and error handling. The example assumes the function ~hasArrayChanged~ exists.
-This could either be a check for the array reference, shallow check of array contents, or even more. If this varies depending on usage, this Loader could be modified to take in the function as a prop.
+
+**** Wouldn't it be nice if there were some sort of ~Loader~ component?
+Something that handled loading data on mounting, loading when relevant props change, setting a loading state, and handling errors? Something that could be used like this:
+#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
+function HandyHeader = ({userId}) => (
+  <Loader args={[userId]} load={methodService.run.bind(null, 'userService.grabSomething')}>
+    {({data, errors, loading}) => {
+      if (loading) {
+        return <Loading />;
+      }
+      if (errors) {
+        return <div>Whoops: {errors}</div>;
+      }
+      return (
+        <div>
+          <Label>Here's that user specific data you asked for</Label>
+          <DataVisualizer data={data} />
+        </div>
+      );
+    }}
+  </Loader>
+);
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/38454d47dc01f0ce0a21d107a07884b4.js"></script>
+#+END_EXPORT
+**** Well here it is! A Render Props version of loading data
+Reuse the loading method, setting the loading state, and error handling. The example assumes the function 
+~hasArrayChanged~ exists to check if the arguments being passed in to props have changed. 
 
 #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
 import * as React from 'react';
@@ -322,7 +443,7 @@ type State<T> = {
   errors: *,
 };
 
-class Loader extends React.Component<Props, State> {
+class Loader<G, T> extends React.Component<Props<G, T>, State<T>> {
   state = { data: null, errors: null, loading: false };
 
   componentDidMount() {
@@ -355,41 +476,12 @@ class Loader extends React.Component<Props, State> {
 <script src="https://gist.github.com/ksaxberg/39edd9b88e76ec9d138bc170c5eefeae.js"></script>
 #+END_EXPORT
 
-**** Which could be used like:
-#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
-function HandyHeader = ({userId}) => (
-  <Loader args={[userId]} load={methodService.run.bind(null, 'userService.grabSomething')}>
-    {({data, errors, loading}) => {
-      if (loading) {
-        return <Loading />;
-      }
-      if (errors) {
-        return <div>Whoops: {errors}</div>;
-      }
-      return (
-        <div>
-          <Label>Here's that user specific data you asked for</Label>
-          <DataVisualizer data={data} />
-        </div>
-      );
-    }}
-  </Loader>
-);
-#+END_SRC
-
-#+BEGIN_EXPORT html
-<script src="https://gist.github.com/ksaxberg/38454d47dc01f0ce0a21d107a07884b4.js"></script>
-#+END_EXPORT
-
-*** Package to help get ideas
-These are packed with tons of re-usable functionality!
+*** Package to help get ideas about how to use Render Props
 **** [[https://github.com/renatorib/react-powerplug][React-Powerplug]]
-It's only 3kb minified! You may recognize a few of these Render Props as well
+     It's only 3kb minified! Has many highly reusable examples. 
 **** [[https://github.com/jaredpalmer/awesome-react-render-props][List of Render Props Packages]]
-** TODO Cases in our Code
-
 * React Tips and Tricks
-** Binding callbacks
+*** Binding callbacks
 There are a few articles about [[https://medium.freecodecamp.org/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56][how to address this.]] The quick answer is to avoid in-line lambdas for performance reason, and to use class properties.
 
 #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
@@ -409,4 +501,13 @@ class Component extends React.Component {
 #+BEGIN_EXPORT html
 <script src="https://gist.github.com/ksaxberg/fdaa9ba95f1983f7ae8fc749162f368c.js"></script>
 #+END_EXPORT
+*** Gotchas and performance concerns [[https://flexport.engineering/optimizing-react-rendering-part-1-9634469dca02][in an article by Flexport]]
+*** How should component data flow be organized to [[https://itnext.io/using-advanced-design-patterns-to-create-flexible-and-reusable-react-components-part-3-render-d7517dfe72bc][allow for flexibility in the view]]
+If the view is always defined statically, there is little flexibility for re-use. At some point you may want to be
+able to reuse some code, but shuffle around how the components are organized. If the view is defined rigidly, you
+would either need to create a whole new view for the component or add flags that allow the re-organization to occur.
+
+But wouldn't it be nice if there were a simple, high level way of re-organizing the view that minimizes data-flow
+concerns? This article explores ways to utilize React Context and Render Props to add flexibility to your React App
+where you may not have thought there was room for any.
 

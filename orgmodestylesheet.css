@@ -8,7 +8,21 @@ body {
 }
 
 #content {
+    background-color: #E5EBF2;
     max-width: none;
+}
+
+#table-of-contents {
+    background: #273647;
+}
+
+#table-of-contents h2 {
+    background: linear-gradient(to bottom right, #6C7AFF 0%, #00B5FF 100%);
+}
+
+#postamble {
+    background: #212B37;
+    border-top: none;
 }
 
 h1, h5, h6 {
