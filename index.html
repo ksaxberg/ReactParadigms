@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2018-08-20 Mon 21:40 -->
+<!-- 2018-08-20 Mon 21:44 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>React Concepts in Practice</title>
@@ -243,82 +243,82 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgea99ff7">React Components</a>
+<li><a href="#org8af76f6">React Components</a>
 <ul>
-<li><a href="#org1556b39">Paradigms</a>
+<li><a href="#orgb3993f1">Paradigms</a>
 <ul>
-<li><a href="#org3ba4aff">Introduction and Overview</a></li>
-<li><a href="#org91dd320">Functional Component (Pure Component)</a>
+<li><a href="#orgd4c0e5c">Introduction and Overview</a></li>
+<li><a href="#orgab15a85">Functional Component (Pure Component)</a>
 <ul>
-<li><a href="#org5b124c9">No state, no side effects, just rendering. Choose your favorite flavor.</a></li>
-<li><a href="#org36ed243">What is <code>PureComponent</code>?</a></li>
-<li><a href="#orgb5b1a57">Still some discussion about usage</a></li>
-<li><a href="#org6be8751">Additional Resources</a></li>
-<li><a href="#orgb1e10f0">A note on Presentational Components (Spoiler alert: It's just a View)</a></li>
+<li><a href="#org36ff740">No state, no side effects, just rendering. Choose your favorite flavor.</a></li>
+<li><a href="#org4e0c30d">What is <code>PureComponent</code>?</a></li>
+<li><a href="#orgaa26c13">Still some discussion about usage</a></li>
+<li><a href="#orgeedbd53">Additional Resources</a></li>
+<li><a href="#org973e94c">A note on Presentational Components (Spoiler alert: It's just a View)</a></li>
 </ul>
 </li>
-<li><a href="#orged858fe">Controller Component</a>
+<li><a href="#org23e78d5">Controller Component</a>
 <ul>
-<li><a href="#org69401da">Can have state, bind functions, organize layouts</a></li>
-<li><a href="#org240caea">It loads data. It might send it to view components. Not much else to say</a></li>
+<li><a href="#org6fb3496">Can have state, bind functions, organize layouts</a></li>
+<li><a href="#org812df6f">It loads data. It might send it to view components. Not much else to say</a></li>
 </ul>
 </li>
-<li><a href="#orgc225f09">Higher Order Component</a>
+<li><a href="#org45c278f">Higher Order Component</a>
 <ul>
-<li><a href="#orgb82a0ba">Provides additional functionality to the component(s) that are wrapped</a></li>
-<li><a href="#org76f6720">Structure: <code>const HoC =&gt; config =&gt; BaseComponent =&gt; EnhancedComponent</code></a></li>
-<li><a href="#org1bda167">Separating logic from containers can help improve your code</a></li>
-<li><a href="#org3f9c5d9">The React team has certain suggestions about how to implement HoCs</a></li>
-<li><a href="#orgaca58ab">Additional Resources</a></li>
+<li><a href="#orge168e44">Provides additional functionality to the component(s) that are wrapped</a></li>
+<li><a href="#org0777832">Structure: <code>const HoC =&gt; config =&gt; BaseComponent =&gt; EnhancedComponent</code></a></li>
+<li><a href="#org87dd050">Separating logic from containers can help improve your code</a></li>
+<li><a href="#orgf6f7307">The React team has certain suggestions about how to implement HoCs</a></li>
+<li><a href="#orgacb26fc">Additional Resources</a></li>
 </ul>
 </li>
-<li><a href="#org0541b06">Render Props</a>
+<li><a href="#org4de8b07">Render Props</a>
 <ul>
-<li><a href="#org345b8f3">Share functionality between components</a></li>
-<li><a href="#orgca4e8c5">What exactly do Render Props do for you?</a></li>
-<li><a href="#org3a2f012">Some things to note</a></li>
-<li><a href="#org03b3af7">Additional Resources</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#orgfc08336">How Can We Leverage These?</a>
-<ul>
-<li><a href="#orgd40466e">Let's check out some useful pre-made Render Props from React-Powerplug</a>
-<ul>
-<li><a href="#org81af56d">Hover</a></li>
-<li><a href="#org2aa9f6e">Value</a></li>
-<li><a href="#org9eb7324">List</a></li>
-<li><a href="#org06b8bbb">State</a></li>
-</ul>
-</li>
-<li><a href="#org6817d5c">Use Case: Using an Accordion</a></li>
-<li><a href="#org26b436d">Data Loading</a>
-<ul>
-<li><a href="#org1e44ce8">Wouldn't it be nice if there were some sort of <code>Loader</code> component?</a></li>
-<li><a href="#orgb852566">Let's look at an HoC version of this first</a></li>
-<li><a href="#org4757e70">And here's a  Render Props version of loading data</a></li>
-</ul>
-</li>
-<li><a href="#org763195f">Package to help get ideas about how to use Render Props</a>
-<ul>
-<li><a href="#orge682a1c">React-Powerplug</a></li>
-<li><a href="#orgf8818d0">List of Render Props Packages</a></li>
+<li><a href="#orgf3352e8">Share functionality between components</a></li>
+<li><a href="#org9b51d7f">What exactly do Render Props do for you?</a></li>
+<li><a href="#org21368e2">Some things to note</a></li>
+<li><a href="#orgb18400f">Additional Resources</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li><a href="#org75ad96d">How Can We Leverage These?</a>
+<ul>
+<li><a href="#org4fb849f">Let's check out some useful pre-made Render Props from React-Powerplug</a>
+<ul>
+<li><a href="#org91951a6">Hover</a></li>
+<li><a href="#org4d3127b">Value</a></li>
+<li><a href="#org6a36a87">List</a></li>
+<li><a href="#org974fda4">State</a></li>
 </ul>
 </li>
-<li><a href="#orgefebf05">React Tips and Tricks</a>
+<li><a href="#org1912d4a">Use Case: Using an Accordion</a></li>
+<li><a href="#org19e5c63">Data Loading</a>
+<ul>
+<li><a href="#orgf20bbc5">Wouldn't it be nice if there were some sort of <code>Loader</code> component?</a></li>
+<li><a href="#orgb975f2d">Let's look at an HoC version of this first</a></li>
+<li><a href="#org9793168">And here's a  Render Props version of loading data</a></li>
+</ul>
+</li>
+<li><a href="#orga8e27f7">Package to help get ideas about how to use Render Props</a>
+<ul>
+<li><a href="#org411b5a9">React-Powerplug</a></li>
+<li><a href="#org6d43703">List of Render Props Packages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org31f36f1">React Tips and Tricks</a>
 <ul>
 <li>
 <ul>
-<li><a href="#org80b9a71">Binding callbacks</a></li>
-<li><a href="#org6aafb2b">Gotchas and performance concerns in an article by Flexport</a></li>
-<li><a href="#org08cbfcf">How should component data flow be organized to allow for flexibility in the view</a>
+<li><a href="#orga3a4311">Binding callbacks</a></li>
+<li><a href="#org7de1e46">Gotchas and performance concerns in an article by Flexport</a></li>
+<li><a href="#orge3aa224">How should component data flow be organized to allow flexibility with Render Props or with Context API</a>
 <ul>
-<li><a href="#org9b1c797">Wouldn't it be nice to have this kind of flexibility?</a></li>
+<li><a href="#org4aedf5f">Wouldn't it be nice to have this kind of flexibility?</a></li>
 </ul>
 </li>
 </ul>
@@ -329,17 +329,17 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgea99ff7" class="outline-2">
-<h2 id="orgea99ff7">React Components</h2>
-<div class="outline-text-2" id="text-orgea99ff7">
+<div id="outline-container-org8af76f6" class="outline-2">
+<h2 id="org8af76f6">React Components</h2>
+<div class="outline-text-2" id="text-org8af76f6">
 </div>
-<div id="outline-container-org1556b39" class="outline-3">
-<h3 id="org1556b39">Paradigms</h3>
-<div class="outline-text-3" id="text-org1556b39">
+<div id="outline-container-orgb3993f1" class="outline-3">
+<h3 id="orgb3993f1">Paradigms</h3>
+<div class="outline-text-3" id="text-orgb3993f1">
 </div>
-<div id="outline-container-org3ba4aff" class="outline-4">
-<h4 id="org3ba4aff">Introduction and Overview</h4>
-<div class="outline-text-4" id="text-org3ba4aff">
+<div id="outline-container-orgd4c0e5c" class="outline-4">
+<h4 id="orgd4c0e5c">Introduction and Overview</h4>
+<div class="outline-text-4" id="text-orgd4c0e5c">
 <p>
 Let's start with a quick video discussion about the 4 major patterns of React components.
 </p>
@@ -355,22 +355,22 @@ Let's start with a quick video discussion about the 4 major patterns of React co
 </div>
 </div>
 
-<div id="outline-container-org91dd320" class="outline-4">
-<h4 id="org91dd320">Functional Component (Pure Component)</h4>
-<div class="outline-text-4" id="text-org91dd320">
+<div id="outline-container-orgab15a85" class="outline-4">
+<h4 id="orgab15a85">Functional Component (Pure Component)</h4>
+<div class="outline-text-4" id="text-orgab15a85">
 </div>
-<div id="outline-container-org5b124c9" class="outline-5">
-<h5 id="org5b124c9">No state, no side effects, just rendering. Choose your favorite flavor.</h5>
-<div class="outline-text-5" id="text-org5b124c9">
+<div id="outline-container-org36ff740" class="outline-5">
+<h5 id="org36ff740">No state, no side effects, just rendering. Choose your favorite flavor.</h5>
+<div class="outline-text-5" id="text-org36ff740">
 <script src="https://gist.github.com/ksaxberg/5653ba87024fd37b3a0d8785b10b7194.js"></script>
 
 <script src="https://gist.github.com/ksaxberg/ef1d0598b609a3f60a690eb3b5061402.js"></script>
 </div>
 </div>
 
-<div id="outline-container-org36ed243" class="outline-5">
-<h5 id="org36ed243">What is <code>PureComponent</code>?</h5>
-<div class="outline-text-5" id="text-org36ed243">
+<div id="outline-container-org4e0c30d" class="outline-5">
+<h5 id="org4e0c30d">What is <code>PureComponent</code>?</h5>
+<div class="outline-text-5" id="text-org4e0c30d">
 <p>
 A React Component's <code>shouldComponentUpdate</code> method is defaulted to <code>return true</code>, as this method exists to give the developer a means of improving component performance on a case by case basis. PureComponent has this defaulted
 to a shallow comparison of props and state, which is largely what you would want in a component that acts like a function (same input, same output). Using Pure Component can improve performance by preventing unnecessary rendering of react components.
@@ -378,9 +378,9 @@ to a shallow comparison of props and state, which is largely what you would want
 </div>
 </div>
 
-<div id="outline-container-orgb5b1a57" class="outline-5">
-<h5 id="orgb5b1a57">Still some discussion about usage</h5>
-<div class="outline-text-5" id="text-orgb5b1a57">
+<div id="outline-container-orgaa26c13" class="outline-5">
+<h5 id="orgaa26c13">Still some discussion about usage</h5>
+<div class="outline-text-5" id="text-orgaa26c13">
 <p>
 There are some <a href="https://hackernoon.com/react-stateless-functional-components-nine-wins-you-might-have-overlooked-997b0d933">benefits</a> and <a href="https://medium.freecodecamp.org/7-reasons-to-outlaw-reacts-functional-components-ff5b5ae09b7c">drawbacks</a>
 </p>
@@ -398,9 +398,9 @@ Quick summary about Functional Components:
 </div>
 </div>
 
-<div id="outline-container-org6be8751" class="outline-5">
-<h5 id="org6be8751">Additional Resources</h5>
-<div class="outline-text-5" id="text-org6be8751">
+<div id="outline-container-orgeedbd53" class="outline-5">
+<h5 id="orgeedbd53">Additional Resources</h5>
+<div class="outline-text-5" id="text-orgeedbd53">
 <ul class="org-ul">
 <li><a href="https://reactjs.org/docs/react-api.html#reactpurecomponent">Pure Component</a> in the React Documentation</li>
 <li><a href="https://www.youtube.com/watch?v=Lx0AE-mhNlg">Quick tutorial about functional components</a></li>
@@ -409,9 +409,9 @@ Quick summary about Functional Components:
 </div>
 </div>
 
-<div id="outline-container-orgb1e10f0" class="outline-5">
-<h5 id="orgb1e10f0">A note on Presentational Components (Spoiler alert: It's just a View)</h5>
-<div class="outline-text-5" id="text-orgb1e10f0">
+<div id="outline-container-org973e94c" class="outline-5">
+<h5 id="org973e94c">A note on Presentational Components (Spoiler alert: It's just a View)</h5>
+<div class="outline-text-5" id="text-org973e94c">
 <p>
 <a href="https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0">Dan Abramov</a> strongly suggests separating Functional (Presentational) Components and Container components. 
 The distinction is usually drawn along the lines of <a href="https://medium.com/@yassimortensen/container-vs-presentational-components-in-react-8eea956e1cea">presentational components organizing the view</a>, 
@@ -430,38 +430,38 @@ look something like the following:
 </div>
 
 
-<div id="outline-container-orged858fe" class="outline-4">
-<h4 id="orged858fe">Controller Component</h4>
-<div class="outline-text-4" id="text-orged858fe">
+<div id="outline-container-org23e78d5" class="outline-4">
+<h4 id="org23e78d5">Controller Component</h4>
+<div class="outline-text-4" id="text-org23e78d5">
 </div>
-<div id="outline-container-org69401da" class="outline-5">
-<h5 id="org69401da">Can have state, bind functions, organize layouts</h5>
+<div id="outline-container-org6fb3496" class="outline-5">
+<h5 id="org6fb3496">Can have state, bind functions, organize layouts</h5>
 </div>
-<div id="outline-container-org240caea" class="outline-5">
-<h5 id="org240caea">It loads data. It might send it to view components. Not much else to say</h5>
-<div class="outline-text-5" id="text-org240caea">
+<div id="outline-container-org812df6f" class="outline-5">
+<h5 id="org812df6f">It loads data. It might send it to view components. Not much else to say</h5>
+<div class="outline-text-5" id="text-org812df6f">
 <script src="https://gist.github.com/ksaxberg/f8f73aaafa003c6991355e8a5eb59ee2.js"></script>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc225f09" class="outline-4">
-<h4 id="orgc225f09">Higher Order Component</h4>
-<div class="outline-text-4" id="text-orgc225f09">
+<div id="outline-container-org45c278f" class="outline-4">
+<h4 id="org45c278f">Higher Order Component</h4>
+<div class="outline-text-4" id="text-org45c278f">
 </div>
-<div id="outline-container-orgb82a0ba" class="outline-5">
-<h5 id="orgb82a0ba">Provides additional functionality to the component(s) that are wrapped</h5>
+<div id="outline-container-orge168e44" class="outline-5">
+<h5 id="orge168e44">Provides additional functionality to the component(s) that are wrapped</h5>
 </div>
-<div id="outline-container-org76f6720" class="outline-5">
-<h5 id="org76f6720">Structure: <code>const HoC =&gt; config =&gt; BaseComponent =&gt; EnhancedComponent</code></h5>
-<div class="outline-text-5" id="text-org76f6720">
+<div id="outline-container-org0777832" class="outline-5">
+<h5 id="org0777832">Structure: <code>const HoC =&gt; config =&gt; BaseComponent =&gt; EnhancedComponent</code></h5>
+<div class="outline-text-5" id="text-org0777832">
 <script src="https://gist.github.com/ksaxberg/9094c3004bf5d619ca0f1d75440d5e9c.js"></script>
 </div>
 </div>
 
-<div id="outline-container-org1bda167" class="outline-5">
-<h5 id="org1bda167">Separating logic from containers can help improve your code</h5>
-<div class="outline-text-5" id="text-org1bda167">
+<div id="outline-container-org87dd050" class="outline-5">
+<h5 id="org87dd050">Separating logic from containers can help improve your code</h5>
+<div class="outline-text-5" id="text-org87dd050">
 <ul class="org-ul">
 <li>Containers can worry less about its data loading, management, or connecting to application state management when that functionality is added via an HoC.</li>
 <li>Enables you to share functionality between components, as the HoCs exist independent of the components they are applied to.</li>
@@ -471,9 +471,9 @@ look something like the following:
 </div>
 </div>
 
-<div id="outline-container-org3f9c5d9" class="outline-5">
-<h5 id="org3f9c5d9">The React team has certain suggestions about how to implement HoCs</h5>
-<div class="outline-text-5" id="text-org3f9c5d9">
+<div id="outline-container-orgf6f7307" class="outline-5">
+<h5 id="orgf6f7307">The React team has certain suggestions about how to implement HoCs</h5>
+<div class="outline-text-5" id="text-orgf6f7307">
 <ul class="org-ul">
 <li>Don't <a href="https://reactjs.org/docs/higher-order-components.html#dont-mutate-the-original-component-use-composition">modify the functions of the wrapped component</a></li>
 <li>HoCs should support <a href="https://reactjs.org/docs/higher-order-components.html#convention-pass-unrelated-props-through-to-the-wrapped-component">passthrough of unrelated props</a></li>
@@ -485,9 +485,9 @@ look something like the following:
 </div>
 </div>
 
-<div id="outline-container-orgaca58ab" class="outline-5">
-<h5 id="orgaca58ab">Additional Resources</h5>
-<div class="outline-text-5" id="text-orgaca58ab">
+<div id="outline-container-orgacb26fc" class="outline-5">
+<h5 id="orgacb26fc">Additional Resources</h5>
+<div class="outline-text-5" id="text-orgacb26fc">
 <ul class="org-ul">
 <li><a href="https://reactjs.org/docs/higher-order-components.html">Higher Order Components</a> in the React Documentation</li>
 <li>An <a href="https://www.robinwieruch.de/gentle-introduction-higher-order-components/">introduction to HoCs</a></li>
@@ -498,20 +498,20 @@ look something like the following:
 </div>
 </div>
 
-<div id="outline-container-org0541b06" class="outline-4">
-<h4 id="org0541b06">Render Props</h4>
-<div class="outline-text-4" id="text-org0541b06">
+<div id="outline-container-org4de8b07" class="outline-4">
+<h4 id="org4de8b07">Render Props</h4>
+<div class="outline-text-4" id="text-org4de8b07">
 </div>
-<div id="outline-container-org345b8f3" class="outline-5">
-<h5 id="org345b8f3">Share functionality between components</h5>
-<div class="outline-text-5" id="text-org345b8f3">
+<div id="outline-container-orgf3352e8" class="outline-5">
+<h5 id="orgf3352e8">Share functionality between components</h5>
+<div class="outline-text-5" id="text-orgf3352e8">
 <script src="https://gist.github.com/ksaxberg/e7ebfcdae62e2b796a56909578072236.js"></script>
 </div>
 </div>
 
-<div id="outline-container-orgca4e8c5" class="outline-5">
-<h5 id="orgca4e8c5">What exactly do Render Props do for you?</h5>
-<div class="outline-text-5" id="text-orgca4e8c5">
+<div id="outline-container-org9b51d7f" class="outline-5">
+<h5 id="org9b51d7f">What exactly do Render Props do for you?</h5>
+<div class="outline-text-5" id="text-org9b51d7f">
 <ul class="org-ul">
 <li>Share <b>functionality</b> between components
 <ul class="org-ul">
@@ -530,9 +530,9 @@ look something like the following:
 </div>
 </div>
 
-<div id="outline-container-org3a2f012" class="outline-5">
-<h5 id="org3a2f012">Some things to note</h5>
-<div class="outline-text-5" id="text-org3a2f012">
+<div id="outline-container-org21368e2" class="outline-5">
+<h5 id="org21368e2">Some things to note</h5>
+<div class="outline-text-5" id="text-org21368e2">
 <p>
 React does not assign meaning to passing a function as <code>children</code>. This is awesome! It means that we can co-opt that usage of children for Render Props.
 Instead of defining a prop <code>render</code> or <code>component</code> being how the function is passed, you can instead pass the function in as the <code>children</code> prop.
@@ -559,9 +559,9 @@ do this if you <b>really</b> disagree with calling children as a function.
 </div>
 </div>
 
-<div id="outline-container-org03b3af7" class="outline-5">
-<h5 id="org03b3af7">Additional Resources</h5>
-<div class="outline-text-5" id="text-org03b3af7">
+<div id="outline-container-orgb18400f" class="outline-5">
+<h5 id="orgb18400f">Additional Resources</h5>
+<div class="outline-text-5" id="text-orgb18400f">
 <ul class="org-ul">
 <li><a href="https://hackernoon.com/do-more-with-less-using-render-props-de5bcdfbe74c">Introduction to Render Props</a> and why they are useful</li>
 <li><a href="https://reactjs.org/docs/render-props.html">Render Props</a> in the React documentation</li>
@@ -571,17 +571,17 @@ do this if you <b>really</b> disagree with calling children as a function.
 </div>
 </div>
 
-<div id="outline-container-orgfc08336" class="outline-3">
-<h3 id="orgfc08336">How Can We Leverage These?</h3>
-<div class="outline-text-3" id="text-orgfc08336">
+<div id="outline-container-org75ad96d" class="outline-3">
+<h3 id="org75ad96d">How Can We Leverage These?</h3>
+<div class="outline-text-3" id="text-org75ad96d">
 </div>
-<div id="outline-container-orgd40466e" class="outline-4">
-<h4 id="orgd40466e">Let's check out some useful pre-made Render Props from React-Powerplug</h4>
-<div class="outline-text-4" id="text-orgd40466e">
+<div id="outline-container-org4fb849f" class="outline-4">
+<h4 id="org4fb849f">Let's check out some useful pre-made Render Props from React-Powerplug</h4>
+<div class="outline-text-4" id="text-org4fb849f">
 </div>
-<div id="outline-container-org81af56d" class="outline-5">
-<h5 id="org81af56d"><a href="https://github.com/renatorib/react-powerplug/blob/master/docs/components/Hover.md">Hover</a></h5>
-<div class="outline-text-5" id="text-org81af56d">
+<div id="outline-container-org91951a6" class="outline-5">
+<h5 id="org91951a6"><a href="https://github.com/renatorib/react-powerplug/blob/master/docs/components/Hover.md">Hover</a></h5>
+<div class="outline-text-5" id="text-org91951a6">
 <p>
 Lets you easily use the hover state on the component.
 </p>
@@ -589,9 +589,9 @@ Lets you easily use the hover state on the component.
 <script src="https://gist.github.com/ksaxberg/818e3be527a51dec06e582443618eea0.js"></script>
 </div>
 </div>
-<div id="outline-container-org2aa9f6e" class="outline-5">
-<h5 id="org2aa9f6e"><a href="https://github.com/renatorib/react-powerplug/blob/master/docs/components/Value.md">Value</a></h5>
-<div class="outline-text-5" id="text-org2aa9f6e">
+<div id="outline-container-org4d3127b" class="outline-5">
+<h5 id="org4d3127b"><a href="https://github.com/renatorib/react-powerplug/blob/master/docs/components/Value.md">Value</a></h5>
+<div class="outline-text-5" id="text-org4d3127b">
 <p>
 Store whatever value you want, no need to define state! Oh yea, this Render Prop takes in an <code>onChange</code> callback,
 so you can keep track of what's going on.
@@ -600,9 +600,9 @@ so you can keep track of what's going on.
 <script src="https://gist.github.com/ksaxberg/49bf82cba73efc4a4e2a011a8b7c7676.js"></script>
 </div>
 </div>
-<div id="outline-container-org9eb7324" class="outline-5">
-<h5 id="org9eb7324"><a href="https://github.com/renatorib/react-powerplug/blob/master/docs/components/List.md">List</a></h5>
-<div class="outline-text-5" id="text-org9eb7324">
+<div id="outline-container-org6a36a87" class="outline-5">
+<h5 id="org6a36a87"><a href="https://github.com/renatorib/react-powerplug/blob/master/docs/components/List.md">List</a></h5>
+<div class="outline-text-5" id="text-org6a36a87">
 <p>
 Ever wanted an easy way to manipulate a list that's stored in state? Well here's an abstracted way to do that!
 List also takes a <code>onChange</code> callback, meaning you can keep your code squeeky clean and still manipulate that list.
@@ -612,9 +612,9 @@ List also takes a <code>onChange</code> callback, meaning you can keep your code
 </div>
 </div>
 
-<div id="outline-container-org06b8bbb" class="outline-5">
-<h5 id="org06b8bbb"><a href="https://github.com/renatorib/react-powerplug/blob/master/docs/components/State.md">State</a></h5>
-<div class="outline-text-5" id="text-org06b8bbb">
+<div id="outline-container-org974fda4" class="outline-5">
+<h5 id="org974fda4"><a href="https://github.com/renatorib/react-powerplug/blob/master/docs/components/State.md">State</a></h5>
+<div class="outline-text-5" id="text-org974fda4">
 <p>
 For when you want to throw the kitchen sink at your problem. If you wanted state&#x2026; just write a class. But
 React-Powerplug won't judge you if you use this.
@@ -625,9 +625,9 @@ React-Powerplug won't judge you if you use this.
 </div>
 </div>
 
-<div id="outline-container-org6817d5c" class="outline-4">
-<h4 id="org6817d5c">Use Case: Using an Accordion</h4>
-<div class="outline-text-4" id="text-org6817d5c">
+<div id="outline-container-org1912d4a" class="outline-4">
+<h4 id="org1912d4a">Use Case: Using an Accordion</h4>
+<div class="outline-text-4" id="text-org1912d4a">
 <p>
 Sometimes you have a controlled component that you'd rather were uncontrolled, and a handy Render Prop could give the functionality you need in-line.
 </p>
@@ -640,22 +640,22 @@ Defining your own state? Who needs it! We've got Render Props to share the logic
 </div>
 
 
-<div id="outline-container-org26b436d" class="outline-4">
-<h4 id="org26b436d">Data Loading</h4>
-<div class="outline-text-4" id="text-org26b436d">
+<div id="outline-container-org19e5c63" class="outline-4">
+<h4 id="org19e5c63">Data Loading</h4>
+<div class="outline-text-4" id="text-org19e5c63">
 </div>
-<div id="outline-container-org1e44ce8" class="outline-5">
-<h5 id="org1e44ce8">Wouldn't it be nice if there were some sort of <code>Loader</code> component?</h5>
-<div class="outline-text-5" id="text-org1e44ce8">
+<div id="outline-container-orgf20bbc5" class="outline-5">
+<h5 id="orgf20bbc5">Wouldn't it be nice if there were some sort of <code>Loader</code> component?</h5>
+<div class="outline-text-5" id="text-orgf20bbc5">
 <p>
 Something that handled loading data on mounting, loading when relevant props change, setting a loading state, and handling errors? Something that could be used like this:
 </p>
 <script src="https://gist.github.com/ksaxberg/38454d47dc01f0ce0a21d107a07884b4.js"></script>
 </div>
 </div>
-<div id="outline-container-orgb852566" class="outline-5">
-<h5 id="orgb852566">Let's look at an HoC version of this first</h5>
-<div class="outline-text-5" id="text-orgb852566">
+<div id="outline-container-orgb975f2d" class="outline-5">
+<h5 id="orgb975f2d">Let's look at an HoC version of this first</h5>
+<div class="outline-text-5" id="text-orgb975f2d">
 <p>
 THe HoC has a pre-determined target for what will be modified by the values
 </p>
@@ -664,9 +664,9 @@ THe HoC has a pre-determined target for what will be modified by the values
 </div>
 </div>
 
-<div id="outline-container-org4757e70" class="outline-5">
-<h5 id="org4757e70">And here's a  Render Props version of loading data</h5>
-<div class="outline-text-5" id="text-org4757e70">
+<div id="outline-container-org9793168" class="outline-5">
+<h5 id="org9793168">And here's a  Render Props version of loading data</h5>
+<div class="outline-text-5" id="text-org9793168">
 <p>
 Reuse the loading method, setting the loading state, and error handling. The example assumes the function 
 <code>hasArrayChanged</code> exists to check if the arguments being passed in to props have changed. 
@@ -677,31 +677,31 @@ Reuse the loading method, setting the loading state, and error handling. The exa
 </div>
 </div>
 
-<div id="outline-container-org763195f" class="outline-4">
-<h4 id="org763195f">Package to help get ideas about how to use Render Props</h4>
-<div class="outline-text-4" id="text-org763195f">
+<div id="outline-container-orga8e27f7" class="outline-4">
+<h4 id="orga8e27f7">Package to help get ideas about how to use Render Props</h4>
+<div class="outline-text-4" id="text-orga8e27f7">
 </div>
-<div id="outline-container-orge682a1c" class="outline-5">
-<h5 id="orge682a1c"><a href="https://github.com/renatorib/react-powerplug">React-Powerplug</a></h5>
-<div class="outline-text-5" id="text-orge682a1c">
+<div id="outline-container-org411b5a9" class="outline-5">
+<h5 id="org411b5a9"><a href="https://github.com/renatorib/react-powerplug">React-Powerplug</a></h5>
+<div class="outline-text-5" id="text-org411b5a9">
 <p>
 It's only 3kb minified! Has many highly reusable examples. 
 </p>
 </div>
 </div>
-<div id="outline-container-orgf8818d0" class="outline-5">
-<h5 id="orgf8818d0"><a href="https://github.com/jaredpalmer/awesome-react-render-props">List of Render Props Packages</a></h5>
+<div id="outline-container-org6d43703" class="outline-5">
+<h5 id="org6d43703"><a href="https://github.com/jaredpalmer/awesome-react-render-props">List of Render Props Packages</a></h5>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-orgefebf05" class="outline-2">
-<h2 id="orgefebf05">React Tips and Tricks</h2>
-<div class="outline-text-2" id="text-orgefebf05">
+<div id="outline-container-org31f36f1" class="outline-2">
+<h2 id="org31f36f1">React Tips and Tricks</h2>
+<div class="outline-text-2" id="text-org31f36f1">
 </div>
-<div id="outline-container-org80b9a71" class="outline-4">
-<h4 id="org80b9a71">Binding callbacks</h4>
-<div class="outline-text-4" id="text-org80b9a71">
+<div id="outline-container-orga3a4311" class="outline-4">
+<h4 id="orga3a4311">Binding callbacks</h4>
+<div class="outline-text-4" id="text-orga3a4311">
 <p>
 There are a few articles about <a href="https://medium.freecodecamp.org/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56">how to address this.</a> The quick answer is to avoid in-line lambdas for performance reason, and to use class properties.
 </p>
@@ -709,12 +709,12 @@ There are a few articles about <a href="https://medium.freecodecamp.org/react-bi
 <script src="https://gist.github.com/ksaxberg/fdaa9ba95f1983f7ae8fc749162f368c.js"></script>
 </div>
 </div>
-<div id="outline-container-org6aafb2b" class="outline-4">
-<h4 id="org6aafb2b">Gotchas and performance concerns <a href="https://flexport.engineering/optimizing-react-rendering-part-1-9634469dca02">in an article by Flexport</a></h4>
+<div id="outline-container-org7de1e46" class="outline-4">
+<h4 id="org7de1e46">Gotchas and performance concerns <a href="https://flexport.engineering/optimizing-react-rendering-part-1-9634469dca02">in an article by Flexport</a></h4>
 </div>
-<div id="outline-container-org08cbfcf" class="outline-4">
-<h4 id="org08cbfcf">How should component data flow be organized to <a href="https://itnext.io/using-advanced-design-patterns-to-create-flexible-and-reusable-react-components-part-3-render-d7517dfe72bc">allow for flexibility in the view</a></h4>
-<div class="outline-text-4" id="text-org08cbfcf">
+<div id="outline-container-orge3aa224" class="outline-4">
+<h4 id="orge3aa224">How should component data flow be organized to allow flexibility with <a href="https://itnext.io/using-advanced-design-patterns-to-create-flexible-and-reusable-react-components-part-3-render-d7517dfe72bc">Render Props</a> or with <a href="https://itnext.io/using-advanced-design-patterns-to-create-flexible-and-reusable-react-components-part-2-react-3c5662b997ab">Context API</a></h4>
+<div class="outline-text-4" id="text-orge3aa224">
 <p>
 If the view is always defined statically, there is little flexibility for re-use. At some point you may want to be
 able to reuse some code, but shuffle around how the components are organized. If the view is defined rigidly, you
@@ -728,9 +728,9 @@ where you may not have thought there was room for any.
 </p>
 </div>
 
-<div id="outline-container-org9b1c797" class="outline-5">
-<h5 id="org9b1c797">Wouldn't it be nice to have this kind of flexibility?</h5>
-<div class="outline-text-5" id="text-org9b1c797">
+<div id="outline-container-org4aedf5f" class="outline-5">
+<h5 id="org4aedf5f">Wouldn't it be nice to have this kind of flexibility?</h5>
+<div class="outline-text-5" id="text-org4aedf5f">
 <p>
 One option is to use render props to pass the needed props to the children components, however this would only look nice in simple cases. In complex cases, you'd just be expanding props into every child that you need to render like this, which is just more boilerplate / noise. 
 </p>
@@ -753,7 +753,7 @@ The only issue with the above is that it limits re-use. You should be able to de
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Kyle</p>
-<p class="date">Created: 2018-08-20 Mon 21:40</p>
+<p class="date">Created: 2018-08-20 Mon 21:44</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

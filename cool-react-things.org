@@ -557,7 +557,7 @@ class Component extends React.Component {
 <script src="https://gist.github.com/ksaxberg/fdaa9ba95f1983f7ae8fc749162f368c.js"></script>
 #+END_EXPORT
 *** Gotchas and performance concerns [[https://flexport.engineering/optimizing-react-rendering-part-1-9634469dca02][in an article by Flexport]]
-*** How should component data flow be organized to [[https://itnext.io/using-advanced-design-patterns-to-create-flexible-and-reusable-react-components-part-3-render-d7517dfe72bc][allow for flexibility in the view]]
+*** How should component data flow be organized to allow flexibility with [[https://itnext.io/using-advanced-design-patterns-to-create-flexible-and-reusable-react-components-part-3-render-d7517dfe72bc][Render Props]] or with [[https://itnext.io/using-advanced-design-patterns-to-create-flexible-and-reusable-react-components-part-2-react-3c5662b997ab][Context API]]
 If the view is always defined statically, there is little flexibility for re-use. At some point you may want to be
 able to reuse some code, but shuffle around how the components are organized. If the view is defined rigidly, you
 would either need to create a whole new view for the component or add flags that allow the re-organization to occur.
