@@ -31,7 +31,7 @@ specific ids for css targetting can be applied to sections with the following bl
 * React Components
 ** Paradigms 
 *** Introduction and Overview
-    Let's start with a quick video discussion about the 4 major patterns of React components.
+    Here's a quick video discussion about the 4 major patterns of React components that we'll be exploring.
 #+BEGIN_EXPORT html
 <div class="container-fluid">
   <div class="row">
@@ -43,7 +43,6 @@ specific ids for css targetting can be applied to sections with the following bl
   </div>
 </div>
 #+END_EXPORT
-
 *** Functional Component (Pure Component)
 **** No state, no side effects, just rendering. Choose your favorite flavor.
 
@@ -178,7 +177,7 @@ const MainDisplay = ({header, sidebar, leftColumn, rightColumn}) => (
 
 *** Higher Order Component
 **** Provides additional functionality to the component(s) that are wrapped
-**** Structure: ~const HoC => config => BaseComponent => EnhancedComponent~
+**** Structure: ~const HoC = config => BaseComponent => EnhancedComponent~
 #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
 // connect: The HoC we know and love
 import { connect } from 'react-redux';
@@ -244,6 +243,7 @@ const AlertButton2 = propBinder2({
 
 *** Render Props
 **** Share functionality between components
+Here we have a Toggle Render Prop which allows us to share the state of 'on' and a functin to modify that state. Anywhere we need that functionality we can use this Toggle, meaning that we can re-use this state logic!
 
 #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
 const Button = () => (
@@ -291,23 +291,23 @@ class Toggle extends React.Component<Props, State> {
   - The component parts that were _boilerplate_ before can now be re-used!
   - Ever had a component that loads data on mounting, reloads on specific props changes?
   - Maybe it also has a loading state?
-  - Stay tuned for a helpful Render Prop example!
+  - Stay tuned for some examples of how to use these concepts to re-use code to address these problems!
 - Represent a way of utilizing [[https://medium.com/byteconf/render-props-in-react-6081b6fa3593][depencency injection]] in combining components
   - A ~List~ container could know nothing about how each ~ListItem~ is displayed
-  - You can skip the component creation in HoCs, as Render Props are defined at their usage.
+  - You can skip the component creation steps required in HoCs, as Render Props are defined at their usage.
 - But make sure you know [[https://blog.kentcdodds.com/when-to-not-use-render-props-5397bbeff746][why you are using a Render Prop]]
 
 **** Some things to note
 
-React does not assign meaning to passing a function as ~children~. This is awesome! It means that we can co-opt that usage of children for Render Props.
+React does not assign meaning to passing a function as ~children~ (a function is not a React.Node type). This is awesome! It means that we can co-opt that usage of children for Render Props.
 Instead of defining a prop ~render~ or ~component~ being how the function is passed, you can instead pass the function in as the ~children~ prop.
 This keeps code that uses Render Props clean and expressive, as you'll see later on. The React Team themselves have
 embraced this paradign in the [[https://reactjs.org/docs/context.html][React Context API]], which uses Render Props to provide an easy interface to avoid 
 passing props through multiple layers of components (commonly known as [[https://itnext.io/compound-components-with-react-v16-3-6679c752bd56][prop drilling]]).
 
-Render Props and Higher Order Components ultimately achieve the same thing in different ways. Higher Order Components add functionality to the component,
-but can obscure it behind exports, like when we see ~export default connect(getCurrentUser)(Header)~. This can reduce reusability and make testing more 
-difficult. Render Props have drawbacks as well, as they define added functionality in-line, which can cause the jsx portions to look more dense.
+Render Props and Higher Order Components ultimately achieve the same thing in different ways. Higher Order Components add functionality to the component but can obscure it behind exports. You'll see this with Redux when we export the connected component, ~export default connect(getCurrentUser)(Header)~. This can reduce reusability and make testing more difficult, as you either mock the HoC or export both the unconnected and connected versions of the component.
+
+Render Props have drawbacks as well, as they define added functionality in-line, which means adding some complexity to the jsx portions. This is located next to the usage, so you have the choice of where you will look to track down bugs. With HoCs, you'll be looking for the definitions of wrapped components to see what is added. With Render Props, you'll be looking in-line in the jsx.
 
 Unrelated, [[https://medium.com/@pshrmn/dont-call-it-a-render-prop-810b80b9c5c5][some people]] are mad about the name Render Prop, but 'function as a child' is not a great
 alternative name. There are [[https://americanexpress.io/faccs-are-an-antipattern/][concerns]] about how having ~children~ be a renderable component does not follow good
@@ -341,7 +341,7 @@ Lets you easily use the hover state on the component.
 #+END_EXPORT
 **** [[https://github.com/renatorib/react-powerplug/blob/master/docs/components/Value.md][Value]]
 Store whatever value you want, no need to define state! Oh yea, this Render Prop takes in an ~onChange~ callback,
-so you can keep track of what's going on.
+so you can keep track of what's going on. Ever wanted input text to control the text of another component? Well then maybe this the tool for you!
 
 #+BEGIN_EXPORT html
 <script src="https://gist.github.com/ksaxberg/49bf82cba73efc4a4e2a011a8b7c7676.js"></script>
@@ -434,9 +434,8 @@ const Page = ({userId}) => (
 #+BEGIN_EXPORT html
 <script src="https://gist.github.com/ksaxberg/38454d47dc01f0ce0a21d107a07884b4.js"></script>
 #+END_EXPORT
-**** Let's look at an HoC version of this first
-
-THe HoC has a pre-determined target for what will be modified by the values
+**** Let's look at an HoC implementation of Loader first
+The HoC has a pre-determined target for what will be modified by the values
 
 #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
 import { hasArrayChanged } from 'array-utils';
@@ -481,9 +480,8 @@ class loader = config => Component =>
 <script src="https://gist.github.com/ksaxberg/7f702f99b72ffcb3abec8c610229e36e.js"></script>
 #+END_EXPORT
 
-**** And here's a  Render Props version of loading data
-Reuse the loading method, setting the loading state, and error handling. The example assumes the function 
-~hasArrayChanged~ exists to check if the arguments being passed in to props have changed. 
+**** And here's a  Render Props version of Loader
+Render Props allows you to stay flexible and have an indeterminate target, ~children~. Looks very similar in implementation to the HoC, as they both provide ways to share logic!
 
 #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
 import { hasArrayChanged } from 'array-utils';
@@ -533,30 +531,34 @@ class Loader<G, T> extends React.Component<Props<G, T>, State<T>> {
 
 *** Package to help get ideas about how to use Render Props
 **** [[https://github.com/renatorib/react-powerplug][React-Powerplug]]
-     It's only 3kb minified! Has many highly reusable examples. 
+     It's only 3kb minified! Has many more great Render Props than just the few examples from above.
 **** [[https://github.com/jaredpalmer/awesome-react-render-props][List of Render Props Packages]]
-* React Tips and Tricks
-*** Binding callbacks
-There are a few articles about [[https://medium.freecodecamp.org/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56][how to address this.]] The quick answer is to avoid in-line lambdas for performance reason, and to use class properties.
+     Here is a collection of public packages that leverage Render Props to get the job done. Even if you don't want to write some Render Props yourself, it pays to know the structure as many community packages rely upon it.
+* Flexible Layouts with Context API and Render Props
+#+BEGIN_COMMENT
+--*** Binding callbacks
+--There are a few articles about [[https://medium.freecodecamp.org/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56][how to address this.]] The quick answer is to avoid in-line lambdas for performance reason, and to use class properties.
+--
+--#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
+--class Component extends React.Component {
+--  message = 'Harumph';
+--
+--  onClick = () => console.log('Hear my message: ', this.message);
+--
+--  render() {
+--    return (
+--      <button type="button" onClick={this.onClick}>Click me!</button>
+--    );
+--  }
+--}
+--#+END_SRC
+--
+--#+BEGIN_EXPORT html
+--<script src="https://gist.github.com/ksaxberg/fdaa9ba95f1983f7ae8fc749162f368c.js"></script>
+--#+END_EXPORT
 
-#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
-class Component extends React.Component {
-  message = 'Harumph';
-
-  onClick = () => console.log('Hear my message: ', this.message);
-
-  render() {
-    return (
-      <button type="button" onClick={this.onClick}>Click me!</button>
-    );
-  }
-}
-#+END_SRC
-
-#+BEGIN_EXPORT html
-<script src="https://gist.github.com/ksaxberg/fdaa9ba95f1983f7ae8fc749162f368c.js"></script>
-#+END_EXPORT
-*** Gotchas and performance concerns [[https://flexport.engineering/optimizing-react-rendering-part-1-9634469dca02][in an article by Flexport]]
+--*** Gotchas and performance concerns [[https://flexport.engineering/optimizing-react-rendering-part-1-9634469dca02][in an article by Flexport]]
+#+END_COMMENT
 *** How should component data flow be organized to allow flexibility with [[https://itnext.io/using-advanced-design-patterns-to-create-flexible-and-reusable-react-components-part-3-render-d7517dfe72bc][Render Props]] or with [[https://itnext.io/using-advanced-design-patterns-to-create-flexible-and-reusable-react-components-part-2-react-3c5662b997ab][Context API]]
 If the view is always defined statically, there is little flexibility for re-use. At some point you may want to be
 able to reuse some code, but shuffle around how the components are organized. If the view is defined rigidly, you
@@ -566,7 +568,7 @@ But wouldn't it be nice if there were a simple, high level way of re-organizing 
 concerns? This article explores ways to utilize React Context and Render Props to add flexibility to your React App
 where you may not have thought there was room for any.
 
-**** Wouldn't it be nice to have this kind of flexibility?
+*** Wouldn't it be nice to have this kind of flexibility?
 One option is to use render props to pass the needed props to the children components, however this would only look nice in simple cases. In complex cases, you'd just be expanding props into every child that you need to render like this, which is just more boilerplate / noise. 
 
 #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
@@ -601,7 +603,7 @@ const LayoutFlat = (propsForCardView) => (
 <script src="https://gist.github.com/ksaxberg/a5de86a3a4acb5167fbfa85d196d936f.js"></script>
 #+END_EXPORT
 
-Let's see how we can create this kind of component utilizing React's context API to allow us to skip directly assigning props.
+*** Let's see how we can create this kind of component utilizing React's context API to allow us to skip directly assigning props.
 
 #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
 const Context = React.CreateContext();
@@ -650,4 +652,5 @@ function Avatar() {
 <script src="https://gist.github.com/ksaxberg/dcaa0fc00184176382416e0e41ee150c.js"></script>
 #+END_EXPORT
 
-The only issue with the above is that it limits re-use. You should be able to define the Consumer/Provider in the constructor, then injecting the consumer as a dependency to those helper components. But that's an uneeded layer of abstraction for the example above. Think of it as an exercise left to the reader!
+*** Word of caution
+ The only issue with the above is that it limits re-use. You should be able to define the Consumer/Provider in the constructor, then injecting the consumer as a dependency to those helper components. But that's an uneeded layer of abstraction for the example above. Think of it as an exercise left to the reader!
