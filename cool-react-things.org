@@ -398,7 +398,7 @@ const Description = ({onSubmit}) => (
 
 
 *** Data Loading
-
+    
 **** Wouldn't it be nice if there were some sort of ~Loader~ component?
 Something that handled loading data on mounting, loading when relevant props change, setting a loading state, and handling errors? Something that could be used like this:
 #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
@@ -413,24 +413,79 @@ function HandyHeader = ({userId}) => (
       }
       return (
         <div>
-          <Label>Here's that user specific data you asked for</Label>
+          <Label>Heres that user specific data you asked for</Label>
           <DataVisualizer data={data} />
         </div>
       );
     }}
   </Loader>
 );
+
+const HoCHeader = loader({method: 'userService.grabSomething'})(Header);
+
+const Page = ({userId}) => (
+  <div>
+    <HoCHeader args={userId} /> // Header is responsible for knowing what props the HoC gives it.
+    <Body />
+  </div>
+);
 #+END_SRC
 
 #+BEGIN_EXPORT html
 <script src="https://gist.github.com/ksaxberg/38454d47dc01f0ce0a21d107a07884b4.js"></script>
 #+END_EXPORT
-**** Well here it is! A Render Props version of loading data
+**** Let's look at an HoC version of this first
+
+THe HoC has a pre-determined target for what will be modified by the values
+
+#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
+import { hasArrayChanged } from 'array-utils';
+
+class loader = config => Component =>
+  class LoaderHoC extends React.Component {
+    state = {
+      loading: false,
+      errors: null,
+      data: null,
+    };
+
+    componentDidMount() {
+      this.loadData();
+    }
+
+    componentDidUpdate(prevProps) {
+      if (hasArrayChanged(this.props.args, prevProps.args)) {
+        this.loadData();
+      }
+    }
+
+
+    loadData = async () => {
+      this.setState({loading: true});
+      try {
+        const data = await this.props.load(...this.props.args);
+        const this.setState({ data, loading: false, errors: null});
+      } catch (err: *) {
+        this.setState({data: null, loading: false, errors: err});
+      } 
+    };
+
+    render() {
+      const {args, ...passThrough} = this.props;
+      return <Component {...passThrough} {...this.state} />
+    }
+  }
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/7f702f99b72ffcb3abec8c610229e36e.js"></script>
+#+END_EXPORT
+
+**** And here's a  Render Props version of loading data
 Reuse the loading method, setting the loading state, and error handling. The example assumes the function 
 ~hasArrayChanged~ exists to check if the arguments being passed in to props have changed. 
 
 #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
-import * as React from 'react';
 import { hasArrayChanged } from 'array-utils';
 
 type RenderPropArgs<T> = {loading: boolean, data: T, errors: *};
@@ -511,3 +566,88 @@ But wouldn't it be nice if there were a simple, high level way of re-organizing 
 concerns? This article explores ways to utilize React Context and Render Props to add flexibility to your React App
 where you may not have thought there was room for any.
 
+**** Wouldn't it be nice to have this kind of flexibility?
+One option is to use render props to pass the needed props to the children components, however this would only look nice in simple cases. In complex cases, you'd just be expanding props into every child that you need to render like this, which is just more boilerplate / noise. 
+
+#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
+import CardView
+
+const LayoutComplex = (propsForCardView) => (
+  <CardView {...propsForCardView}>
+    <div className="-layout-h -justify-between">
+      <CardView.Avatar />
+      <div className="-space-v-16">
+        <CardView.Details />
+        <CardView.FriendButton />
+      </div>
+      <CardView.ReportButton />
+    </div>
+  </CardView>
+);
+
+const LayoutFlat = (propsForCardView) => (
+  <CardView {...propsForCardView}>
+    <div className="-layout-v">
+      <CardView.Avatar />
+      <CardView.Details />
+      <CardView.FriendButton />
+      <CardView.ReportButton />
+    </div>
+  </CardView>
+);
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/a5de86a3a4acb5167fbfa85d196d936f.js"></script>
+#+END_EXPORT
+
+Let's see how we can create this kind of component utilizing React's context API to allow us to skip directly assigning props.
+
+#+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
+const Context = React.CreateContext();
+class CardView extends React.Component {
+  Avatar = Avatar;
+  ReportButton = ReportButton;
+  FriendButton = FriendButton;
+  Details = Details;
+
+  render() {
+    const {children, ...restProps} = this.props;
+    return (
+      <Context.Provider value={restProps}>
+        {this.props.children}
+      </Context.Provider>
+    );
+  }
+}
+
+
+function ReportButton() {
+  return (
+    <Context.Consumer>
+      {({onReportClick}) => (
+        <button type="button" onClick={onReportClick}>Report</button>
+      )}
+    </Context.Consumer>
+  );
+}
+
+function Avatar() {
+  return (
+    <Context.Consumer>
+      {({userId}) => (
+        <Avatar userId={userId} />
+      )}
+    </Context.Consumer>
+  );
+}
+
+/* ... similar looking things for FriendButton and Details ... */
+
+#+END_SRC
+
+#+BEGIN_EXPORT html
+<script src="https://gist.github.com/ksaxberg/dcaa0fc00184176382416e0e41ee150c.js"></script>
+#+END_EXPORT
+
+The only issue with the above is that it limits re-use. You should be able to define the Consumer/Provider in the constructor, then injecting the consumer as a dependency to those helper components. But that's an uneeded layer of abstraction for the example above. Think of it as an exercise left to the reader!
