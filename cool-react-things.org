@@ -1,4 +1,4 @@
-#+TITLE: React Concepts in Practice
+#+TITLE: React Paradigms in Practice
 #+AUTHOR: Kyle
 #+EMAIL: kyle@codesignal.com
 #+LANGUAGE: en
@@ -31,7 +31,7 @@ specific ids for css targetting can be applied to sections with the following bl
 * React Components
 ** Paradigms 
 *** Introduction and Overview
-    Here's a quick video discussion about the 4 major patterns of React components that we'll be exploring.
+    Here's a quick video discussion about the major patterns of React components that we'll be exploring.
 #+BEGIN_EXPORT html
 <div class="container-fluid">
   <div class="row">
@@ -108,7 +108,7 @@ Quick summary about Functional Components:
 - [[https://www.youtube.com/watch?v=40Bq8kOKB74][A quick comparison of shouldComponentUpdate and PureComponent]]
 
 **** A note on Presentational Components (Spoiler alert: It's just a View)
-[[https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0][Dan Abramov]] strongly suggests separating Functional (Presentational) Components and Container components. 
+[[https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0][Dan Abramov]] strongly suggests separating Functional (Presentational) Components and Controller components. 
 The distinction is usually drawn along the lines of [[https://medium.com/@yassimortensen/container-vs-presentational-components-in-react-8eea956e1cea][presentational components organizing the view]], 
 while the container component may load or organize data. So if you use Functional Components as views in
 MVC, you're in good form!
@@ -144,7 +144,7 @@ const MainDisplay = ({header, sidebar, leftColumn, rightColumn}) => (
 
 *** Controller Component
 **** Can have state, bind functions, organize layouts
-**** It loads data. It might send it to view components. Not much else to say
+**** It loads data. It might send it to view components. It hooks into the lifecycle methods to get the job done
      
  #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
  import * as React from 'react';
@@ -206,7 +206,7 @@ const AlertButton = propBinder(Button, {
 });
 
 
-// A version the React Team would approve of
+// A version using lambdas
 const propBinder2 = propsToBind => WrappedComponent =>
   (props) => <WrappedComponent {...props} {...propsToBind} />;
 
@@ -561,15 +561,17 @@ class Loader<G, T> extends React.Component<Props<G, T>, State<T>> {
 #+END_COMMENT
 *** How should component data flow be organized to allow flexibility with [[https://itnext.io/using-advanced-design-patterns-to-create-flexible-and-reusable-react-components-part-3-render-d7517dfe72bc][Render Props]] or with [[https://itnext.io/using-advanced-design-patterns-to-create-flexible-and-reusable-react-components-part-2-react-3c5662b997ab][Context API]]
 If the view is always defined statically, there is little flexibility for re-use. At some point you may want to be
-able to reuse some code, but shuffle around how the components are organized. If the view is defined rigidly, you
-would either need to create a whole new view for the component or add flags that allow the re-organization to occur.
+able to reuse some code, but shuffle around how the components are being displayed. If the view is defined rigidly, you
+would either need to create a whole new view for the component or add flags that allow you to switch between layouts.
 
-But wouldn't it be nice if there were a simple, high level way of re-organizing the view that minimizes data-flow
-concerns? This article explores ways to utilize React Context and Render Props to add flexibility to your React App
+But wouldn't it be nice if there were a simple, high level way of re-organizing the view that removes data-flow
+concerns? Let's explore ways to utilize React Context and Render Props to add flexibility to your React App
 where you may not have thought there was room for any.
 
 *** Wouldn't it be nice to have this kind of flexibility?
 One option is to use render props to pass the needed props to the children components, however this would only look nice in simple cases. In complex cases, you'd just be expanding props into every child that you need to render like this, which is just more boilerplate / noise. 
+
+So let's not use render props in our goal-syntax, and instead create something that takes in props at the top level, and allows us to place some view components wherever we want them underneath. This keeps our layout definition nice and clear, and we know that props are 'prop'-erly making it to their final destination.
 
 #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
 import CardView
@@ -603,10 +605,11 @@ const LayoutFlat = (propsForCardView) => (
 <script src="https://gist.github.com/ksaxberg/a5de86a3a4acb5167fbfa85d196d936f.js"></script>
 #+END_EXPORT
 
-*** Let's see how we can create this kind of component utilizing React's context API to allow us to skip directly assigning props.
+*** Let's see how we can create this kind of component utilizing React's context API to allow us to skip directly passing props.
 
 #+BEGIN_SRC js -n :exports (when (eq org-export-current-backend 'html) "none")
 const Context = React.CreateContext();
+
 class CardView extends React.Component {
   Avatar = Avatar;
   ReportButton = ReportButton;
@@ -653,4 +656,4 @@ function Avatar() {
 #+END_EXPORT
 
 *** Word of caution
- The only issue with the above is that it limits re-use. You should be able to define the Consumer/Provider in the constructor, then injecting the consumer as a dependency to those helper components. But that's an uneeded layer of abstraction for the example above. Think of it as an exercise left to the reader!
+ The above is a little limited in re-use, as we're using a statically defined Context Provider / Consumer pair. You should be able to define the Consumer/Provider in the constructor, then injecting the consumer as a dependency to those helper components. But that's an uneeded layer of abstraction for the example above. Think of it as an exercise left to the reader!
